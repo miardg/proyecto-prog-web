@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KynetikGym - Gestionar Disponibilidad</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="disponibilidad.js" defer></script>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="dashboard.html">
+                <i class="fas fa-dumbbell text-warning me-2"></i>KynetikGym
+            </a>
+        </div>
+    </nav>
+
+    <main class="container flex-grow-1 py-5" style="margin-top: 80px;">
+        <h2 class="mb-2 text-center" id="dashboardTitle">Control de horarios</h2>
+        <p class="text-center mb-5" id="dashboardText">Define tus franjas de atención para los clientes.</p>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Agregar Nueva Franja</h5>
+                <form id="formFranja">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-3">
+                            <div class="position-relative">
+                                <label for="dia" class="form-label">Día</label>
+                                <select class="form-select" id="dia" required>
+                                    <option value="">Selecciona un día</option>
+                                    <option>Lunes</option>
+                                    <option>Martes</option>
+                                    <option>Miércoles</option>
+                                    <option>Jueves</option>
+                                    <option>Viernes</option>
+                                    <option>Sábado</option>
+                                    <option>Domingo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="position-relative">
+                                <label for="horaInicio" class="form-label">Hora Inicio</label>
+                                <input type="time" class="form-control" id="horaInicio" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="position-relative">
+                                <label for="horaFin" class="form-label">Hora Fin</label>
+                                <input type="time" class="form-control" id="horaFin" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="position-relative">
+                                <label for="cupos" class="form-label">Cupos</label>
+                                <input type="number" class="form-control" id="cupos" min="1" value="1" required>
+                            </div>
+                        </div>
+                        <div class="col-md-1 text-end">
+                            <button type="submit" class="btn btn-warning">Añadir</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Franjas de Disponibilidad</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="tablaDisponibilidad">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Día</th>
+                                <th>Hora Inicio</th>
+                                <th>Hora Fin</th>
+                                <th>Cupos</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Feedback -->
+    <div class="modal fade" id="modalFeedback" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Título</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modal-body">Mensaje</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-5 mt-auto">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 KynetikGym. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
