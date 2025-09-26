@@ -1,0 +1,77 @@
+/* === Variables base === */
+:root {
+    --color-primario: #007bff;
+    --color-secundario: #343a40;
+    --color-fondo: #f8f9fa;
+    --sombra-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* === Reset básico === */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-fondo);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* === Header === */
+header {
+    background-color: var(--color-secundario);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* === Panel del Socio === */
+#panel-socio {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+#panel-socio h2 {
+    font-size: 2rem;
+    color: var(--color-secundario);
+    margin-bottom: 2rem;
+}
+
+#panel-socio .card {
+    border: none;
+    box-shadow: var(--sombra-card);
+    transition: transform 0.3s ease;
+}
+
+#panel-socio .card:hover {
+    transform: translateY(-5px);
+}
+
+#panel-socio .card-title {
+    font-size: 1.2rem;
+    color: var(--color-primario);
+    margin-bottom: 0.5rem;
+}
+
+#panel-socio .card-text {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+#panel-socio .btn {
+    margin-top: 1rem;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    #panel-socio .card {
+        margin-bottom: 1rem;
+    }
+}
