@@ -1,10 +1,14 @@
 window.onload = function () {
     let clases = obtenerClases();
     let planSocio = obtenerPlanSocio();
+    let beneficios = obtenerBeneficios();
 
     inicializarRedirecciones();
     inicializarClases(clases, planSocio);
     inicializarModalPlan();
+    inicializarBuscador(beneficios);
+    inicializarTabla(beneficios);
+    inicializarSaludYProgreso(planSocio);
 };
 
 function obtenerClases() {
@@ -20,10 +24,29 @@ function obtenerClases() {
 
 function obtenerPlanSocio() {
     return {
-        nombre: "Premium",
+        nombre: "Básico",
         estado: "Activo",
         clasesParticularesRestantes: Infinity
     };
+}
+
+function obtenerBeneficios() {
+    return [
+        { id: 1, nombre: "10% en suplementos", tipo: "Descuento", descripcion: "Válido en tienda asociada", canjeado: false },
+        { id: 2, nombre: "Sesión de masajes", tipo: "Servicio", descripcion: "1 sesión mensual incluida", canjeado: false },
+        { id: 3, nombre: "Acceso a spa", tipo: "Convenio", descripcion: "Disponible para planes Premium y Élite", canjeado: false }
+    ];
+}
+
+function inicializarSaludYProgreso(plan) {
+    let bloque = document.getElementById("saludProgreso");
+    if (!bloque) return;
+
+    if (plan.nombre !== "Básico") {
+        bloque.classList.remove("d-none");
+    } else {
+        bloque.classList.add("d-none");
+    }
 }
 
 function inicializarClases(clases, planSocio) {
@@ -108,6 +131,60 @@ function mostrarModalClase(clase, planSocio) {
     modal.show();
 }
 
+function inicializarTabla(lista) {
+    let tabla = document.getElementById("tablaBeneficios");
+    if (!tabla) return;
+
+    tabla.innerHTML = "";
+
+    lista.forEach(b => {
+        let fila = document.createElement("tr");
+        fila.innerHTML = `
+    <td>${b.nombre}</td>
+    <td>${b.tipo}</td>
+    <td>${b.descripcion}</td>
+    <td>
+      <button 
+        class="btn btn-sm ${b.canjeado ? 'btn-warning' : 'btn-success'}"
+        data-id="${b.id}"
+        data-action="${b.canjeado ? 'descanjear' : 'canjear'}"
+      >
+        ${b.canjeado ? 'Deshacer' : 'Canjear'}
+      </button>
+    </td>
+  `;
+        tabla.appendChild(fila);
+    });
+
+    tabla.addEventListener("click", (e) => {
+        let id = parseInt(e.target.dataset.id);
+        let accion = e.target.dataset.action;
+        let beneficio = lista.find(b => b.id === id);
+        if (!beneficio) return;
+
+        if (accion === "canjear" && !beneficio.canjeado) {
+            canjearBeneficio(beneficio, lista);
+        } else if (accion === "descanjear" && beneficio.canjeado) {
+            descanjearBeneficio(beneficio, lista);
+        }
+    });
+}
+
+function inicializarBuscador(lista) {
+    let buscador = document.getElementById("buscadorBeneficio");
+    if (!buscador) return;
+
+    buscador.addEventListener("input", () => {
+        let texto = buscador.value.toLowerCase();
+        let filtrados = lista.filter(b =>
+            b.nombre.toLowerCase().includes(texto) ||
+            b.tipo.toLowerCase().includes(texto) ||
+            b.descripcion.toLowerCase().includes(texto)
+        );
+        inicializarTabla(filtrados);
+    });
+}
+
 function inicializarRedirecciones() {
     let asignarRedireccion = (id, url) => {
         let btn = document.getElementById(id);
@@ -143,4 +220,39 @@ function inicializarModalPlan() {
         botonModal.textContent = "Confirmar";
         modal.show();
     });
+}
+
+function canjearBeneficio(beneficio, lista) {
+    beneficio.canjeado = true;
+
+    let modal = new bootstrap.Modal(document.getElementById("modalBeneficio"));
+    let modalBody = document.getElementById("modalBeneficioBody");
+    let modalLabel = document.getElementById("modalBeneficioLabel");
+
+    modalLabel.textContent = "Canje exitoso";
+    modalBody.innerHTML = `
+      <p>Has canjeado el beneficio <strong>${beneficio.nombre}</strong>.</p>
+      <p>Tipo: ${beneficio.tipo}</p>
+      <p>${beneficio.descripcion}</p>
+    `;
+    modal.show();
+
+    inicializarTabla(lista);
+}
+
+function descanjearBeneficio(beneficio, lista) {
+    beneficio.canjeado = false;
+
+    let modal = new bootstrap.Modal(document.getElementById("modalBeneficio"));
+    let modalBody = document.getElementById("modalBeneficioBody");
+    let modalLabel = document.getElementById("modalBeneficioLabel");
+
+    modalLabel.textContent = "Canje revertido";
+    modalBody.innerHTML = `
+      <p>Has revertido el canje del beneficio <strong>${beneficio.nombre}</strong>.</p>
+      <p>Ahora está disponible nuevamente.</p>
+    `;
+    modal.show();
+
+    inicializarTabla(lista);
 }
