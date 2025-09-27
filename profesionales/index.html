@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KynetikGym - Panel Profesional</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="profesionales.js"></script>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-dumbbell text-warning me-2"></i>KynetikGym
+            </a>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-warning" id="btnLogout">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container flex-grow-1 py-5" style="margin-top: 80px;">
+
+        <div id="dashboard" style="display:none;">
+            <h2 class="mb-4" id="dashboardTitle">Panel Profesional</h2>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Turnos Asignados</h5>
+                            <p class="card-text">Aquí se mostrarán los turnos asignados a tus clientes.</p>
+                            <a href="turnos.html" class="btn btn-warning" id="btnTurnos">Ver Turnos</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title" id="calendarioTitle">Calendario</h5>
+                            <p class="card-text" id="calendarioText">Visualiza y gestiona tu disponibilidad.</p>
+                            <a href="disponibilidad.html" class="btn btn-warning" id="btnCalendario">Abrir
+                                Calendario</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title" id="gestionTitle">Gestión</h5>
+                    <p class="card-text" id="gestionText">Sube o elimina archivos asociados a tus clientes.</p>
+                    <a href="planes.html" class="btn btn-warning" id="btnGestion">Gestionar</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-dark text-white py-5 mt-auto">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 KynetikGym. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
