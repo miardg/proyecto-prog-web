@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
     let formFranja = document.getElementById("formFranja");
     let tablaDisponibilidad = document.querySelector("#tablaDisponibilidad tbody");
 
@@ -13,6 +13,11 @@ window.onload = function() {
         modalBody.textContent = mensaje;
         modalFeedback.show();
     }
+    // Botón de logout
+    let btnLogout = document.getElementById("btnLogout");
+    btnLogout.addEventListener("click", function () {
+        window.location.href = ""; //aca se tiene que manejar el cierre de sesion
+    });
 
     // Función para agregar fila a la tabla
     function agregarFila(dia, horaInicio, horaFin, cupos) {

@@ -20,20 +20,18 @@ window.onload = function() {
     // Configuración de textos según rol
     if (rol === "pt") {
         dashboardTitle.textContent = "Panel Personal Trainer";
-        calendarioTitle.textContent = "Calendario PT";
-        calendarioText.textContent = "Visualiza y gestiona tu calendario de entrenamientos.";
+        calendarioTitle.textContent = "Disponibilidad PT";
+        calendarioText.textContent = "Visualiza y gestiona Disponibilidad.";
         gestionTitle.textContent = "Gestión de Rutinas";
         gestionText.textContent = "Sube o elimina archivos de rutinas asociadas a cada socio.";
         btnGestion.textContent = "Gestionar Rutinas";
-        btnGestion.href = "#"; // cambiar al link real
     } else if (rol === "nutri") {
         dashboardTitle.textContent = "Panel Nutricionista";
-        calendarioTitle.textContent = "Calendario Nutricionista";
-        calendarioText.textContent = "Visualiza y gestiona tu calendario de consultas.";
+        calendarioTitle.textContent = "Disponibilidad Nutricionista";
+        calendarioText.textContent = "Visualiza y gestiona Disponibilidad.";
         gestionTitle.textContent = "Gestión de Planes de Alimentación";
         gestionText.textContent = "Sube o elimina planes alimentarios asociados a cada socio.";
         btnGestion.textContent = "Gestionar Planes";
-        btnGestion.href = "#"; // cambiar al link real
     }
 
     // Botón cerrar sesión
