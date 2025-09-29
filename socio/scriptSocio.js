@@ -5,10 +5,12 @@ window.onload = function () {
 
     inicializarRedirecciones();
     inicializarClases(clases, planSocio);
-    inicializarModalPlan();
     inicializarBuscador(beneficios);
     inicializarTabla(beneficios);
     inicializarSaludYProgreso(planSocio);
+    cargarPersonalTrainer();
+    cargarTablaRutinas();
+    cargarTablaAlimentacion();
 };
 
 function obtenerClases() {
@@ -56,21 +58,25 @@ function inicializarClases(clases, planSocio) {
     clases.forEach(clase => {
         let tarjeta = document.createElement("div");
         tarjeta.className = "col-md-4";
+
         tarjeta.innerHTML = `
-      <div class="card h-100 text-center">
-        <div class="card-body">
-          <h5 class="card-title">${clase.nombre}</h5>
-          <p class="card-text">${clase.dia} - ${clase.horario}</p>
-          <p class="card-text">Tipo: ${clase.tipo}</p>
-          <button class="btn btn-outline-primary" data-id="${clase.id}">Anotarse</button>
+        <div class="card card-socio h-100 text-center">
+          <div class="card-body">
+            <i class="fas fa-calendar-check display-5 text-warning mb-3"></i>
+            <h5 class="card-title">${clase.nombre}</h5>
+            <p class="card-text"><strong>Día:</strong> ${clase.dia}</p>
+            <p class="card-text"><strong>Horario:</strong> ${clase.horario}</p>
+            <p class="card-text"><strong>Tipo:</strong> ${clase.tipo}</p>
+            <button class="btn btn-outline-warning w-100 mt-3 btn-anotarse" data-id="${clase.id}">Anotarse</button>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+
         contenedor.appendChild(tarjeta);
     });
 
     contenedor.addEventListener("click", (e) => {
-        if (e.target.tagName === "BUTTON") {
+        if (e.target.classList.contains("btn-anotarse")) {
             let id = parseInt(e.target.getAttribute("data-id"));
             let claseSeleccionada = clases.find(c => c.id === id);
             mostrarModalClase(claseSeleccionada, planSocio);
@@ -140,19 +146,19 @@ function inicializarTabla(lista) {
     lista.forEach(b => {
         let fila = document.createElement("tr");
         fila.innerHTML = `
-    <td>${b.nombre}</td>
-    <td>${b.tipo}</td>
-    <td>${b.descripcion}</td>
-    <td>
-      <button 
-        class="btn btn-sm ${b.canjeado ? 'btn-warning' : 'btn-success'}"
-        data-id="${b.id}"
-        data-action="${b.canjeado ? 'descanjear' : 'canjear'}"
-      >
-        ${b.canjeado ? 'Deshacer' : 'Canjear'}
-      </button>
-    </td>
-  `;
+            <td>${b.nombre}</td>
+            <td>${b.tipo}</td>
+            <td>${b.descripcion}</td>
+            <td>
+                <button 
+                    class="btn btn-sm ${b.canjeado ? 'btn-outline-warning' : 'btn-outline-success'} fw-bold"
+                    data-id="${b.id}"
+                    data-action="${b.canjeado ? 'descanjear' : 'canjear'}"
+                >
+                    ${b.canjeado ? 'Deshacer' : 'Canjear'}
+                </button>
+            </td>
+            `;
         tabla.appendChild(fila);
     });
 
@@ -203,25 +209,6 @@ function inicializarRedirecciones() {
     asignarRedireccion("btnPersonalTrainer", "personalTrainerSocio.html");
 }
 
-function inicializarModalPlan() {
-    let btn = document.getElementById("btnModificarPlan");
-    if (!btn) return;
-
-    btn.addEventListener("click", () => {
-        let modalHeader = document.getElementById("modalHeader");
-        let modalBody = document.getElementById("modalBody");
-        let botonModal = document.getElementById("botonModal");
-        let modal = new bootstrap.Modal(document.getElementById("myModal"));
-
-        modalHeader.innerHTML = "Modificación de Plan";
-        modalBody.innerHTML = "¿Estás seguro que querés modificar tu plan actual?";
-        botonModal.classList.remove("btn-secondary");
-        botonModal.classList.add("btn-success");
-        botonModal.textContent = "Confirmar";
-        modal.show();
-    });
-}
-
 function canjearBeneficio(beneficio, lista) {
     beneficio.canjeado = true;
 
@@ -255,4 +242,86 @@ function descanjearBeneficio(beneficio, lista) {
     modal.show();
 
     inicializarTabla(lista);
+}
+
+function cargarPersonalTrainer() {
+    let contenedor = document.getElementById("bloqueTrainer");
+    if (!contenedor) return;
+
+    let card = document.createElement("div");
+    card.className = "col-md-6 offset-md-3";
+
+    card.innerHTML = `
+      <div class="card card-socio h-100 text-center">
+        <div class="card-body">
+          <i class="fas fa-user-tie display-5 text-warning mb-3"></i>
+          <h5 class="card-title">Tu Entrenador</h5>
+          <p class="card-text"><strong>Nombre:</strong> Juan Pérez</p>
+          <p class="card-text"><strong>Objetivo actual:</strong> Mejorar resistencia y tonificar</p>
+          <p class="card-text"><strong>Próxima sesión:</strong> Martes 1/10 - 18:00 hs</p>
+          <button id="btnHistorialTrainer" class="btn btn-outline-warning w-100 mt-3">Ver Historial</button>
+        </div>
+      </div>
+    `;
+
+    contenedor.appendChild(card);
+
+    // Evento del botón dentro de la misma función
+    let btn = document.getElementById("btnHistorialTrainer");
+    if (btn) {
+        btn.addEventListener("click", () => {
+            let modal = new bootstrap.Modal(document.getElementById("modalHistorialTrainer"));
+            modal.show();
+        });
+    }
+}
+
+function cargarTablaRutinas() {
+    let rutinas = [
+        { dia: "Lunes", rutina: "Fuerza tren inferior", objetivo: "Tonificar piernas", duracion: "45 min" },
+        { dia: "Martes", rutina: "Cardio HIIT", objetivo: "Resistencia y quema grasa", duracion: "30 min" },
+        { dia: "Miércoles", rutina: "Core + movilidad", objetivo: "Fortalecer abdomen", duracion: "40 min" },
+        { dia: "Jueves", rutina: "Fuerza tren superior", objetivo: "Tonificar brazos y espalda", duracion: "50 min" },
+        { dia: "Sábado", rutina: "Full body", objetivo: "Trabajo general", duracion: "60 min" }
+    ];
+
+    let tabla = document.getElementById("tablaRutinas");
+    if (!tabla) return;
+
+    tabla.innerHTML = ""; // Limpieza previa
+
+    rutinas.forEach(r => {
+        let fila = document.createElement("tr");
+        fila.innerHTML = `
+        <td>${r.dia}</td>
+        <td>${r.rutina}</td>
+        <td>${r.objetivo}</td>
+        <td>${r.duracion}</td>
+      `;
+        tabla.appendChild(fila);
+    });
+}
+
+function cargarTablaAlimentacion() {
+    let comidas = [
+        { dia: "Lunes", comida: "Ensalada de pollo + arroz integral", tipo: "Almuerzo", calorias: "550 kcal" },
+        { dia: "Martes", comida: "Omelette + tostadas", tipo: "Desayuno", calorias: "400 kcal" },
+        { dia: "Miércoles", comida: "Salmón + puré de calabaza", tipo: "Cena", calorias: "600 kcal" },
+        { dia: "Jueves", comida: "Wrap de vegetales + yogur", tipo: "Almuerzo", calorias: "480 kcal" },
+        { dia: "Viernes", comida: "Batido proteico + banana", tipo: "Merienda", calorias: "300 kcal" }
+    ];
+
+    let tabla = document.getElementById("tablaAlimentacion");
+    if (!tabla) return;
+
+    comidas.forEach(c => {
+        let fila = document.createElement("tr");
+        fila.innerHTML = `
+        <td>${c.dia}</td>
+        <td>${c.comida}</td>
+        <td>${c.tipo}</td>
+        <td>${c.calorias}</td>
+      `;
+        tabla.appendChild(fila);
+    });
 }

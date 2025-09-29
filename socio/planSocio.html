@@ -4,78 +4,62 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gimnasio Vital</title>
+    <title>KYNETIK GYM</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="styleSocio.css" />
     <script src="./scriptSocio.js"></script>
 </head>
 
-<body>
-    <header class="bg-dark text-white text-center py-4">
-        <h1>Plan socio</h1>
-        <p>Tu lugar para entrenar cuerpo y mente</p>
+<body class="bg-dark text-white">
+    <header class="text-center py-5">
+        <h1 class="display-5 text-warning">Plan del Socio</h1>
+        <p class="lead text-light">Tu lugar para entrenar cuerpo y mente</p>
     </header>
 
-    <div class="container py-5">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Plan Actual: Premium</h5>
-                <p><strong>Inicio:</strong> 01/09/2025</p>
-                <p><strong>Vencimiento:</strong> 01/10/2025</p>
-                <p><strong>Estado:</strong> Activo</p>
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>Servicio</th>
-                            <th>Disponible</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Clases particulares</td>
-                            <td>Ilimitadas</td>
-                        </tr>
-                        <tr>
-                            <td>Consultas nutrición</td>
-                            <td>2 restantes</td>
-                        </tr>
-                        <tr>
-                            <td>Sesiones personal trainer</td>
-                            <td>1 restante</td>
-                        </tr>
-                        <tr>
-                            <td>Plan de alimentación</td>
-                            <td>Incluido</td>
-                        </tr>
-                        <tr>
-                            <td>Rutinas</td>
-                            <td>Personalizadas</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <main class="container py-5">
+        <section class="mb-5">
+            <div class="card card-socio">
+                <div class="card-body">
+                    <h5 class="card-title">Plan Actual: <span class="text-warning">Premium</span></h5>
+                    <p><strong>Inicio:</strong> 01/09/2025</p>
+                    <p><strong>Vencimiento:</strong> 01/10/2025</p>
+                    <p><strong>Estado:</strong> <span class="text-success">Activo</span></p>
 
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalHeader" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalHeader">Título</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body" id="modalBody">
-                    Contenido del modal
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="botonModal"
-                        data-bs-dismiss="modal">Cerrar</button>
+                    <table class="table table-dark table-bordered table-striped mt-4">
+                        <thead class="table-warning text-dark">
+                            <tr>
+                                <th>Servicio</th>
+                                <th>Disponible</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Clases particulares</td>
+                                <td>Ilimitadas</td>
+                            </tr>
+                            <tr>
+                                <td>Consultas nutrición</td>
+                                <td>2 restantes</td>
+                            </tr>
+                            <tr>
+                                <td>Sesiones personal trainer</td>
+                                <td>1 restante</td>
+                            </tr>
+                            <tr>
+                                <td>Plan de alimentación</td>
+                                <td>Incluido</td>
+                            </tr>
+                            <tr>
+                                <td>Rutinas</td>
+                                <td>Personalizadas</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
-
+        </section>
+    </main>
 
     <footer class="bg-dark text-white py-5 mt-5">
         <div class="container text-center">
