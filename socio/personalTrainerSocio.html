@@ -11,9 +11,9 @@
     <script src="./scriptSocio.js"></script>
 </head>
 
-<body class="bg-dark text-white">
+<body>
 
-    <header class="text-center py-5">
+    <header class="text-center py-5 bg-white border-bottom">
         <h1 class="display-5 text-warning">Personal Trainer</h1>
         <p class="lead text-light">Consultá tus sesiones y objetivos con tu entrenador</p>
     </header>
@@ -51,6 +51,52 @@
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Solicitar Sesión -->
+    <div class="modal fade" id="modalTurnoTrainer" tabindex="-1" aria-labelledby="modalTurnoTrainerLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-white text-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTurnoTrainerLabel">Solicitar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formTurnoTrainer">
+                        <div class="mb-3">
+                            <label for="fechaTrainer" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fechaTrainer" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="horaTrainer" class="form-label">Horario</label>
+                            <select class="form-select" id="horaTrainer" required>
+                                <option value="">Seleccionar horario</option>
+                                <option value="08:00">08:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="formTurnoTrainer" class="btn btn-warning">Confirmar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de carga -->
+    <div class="modal fade" id="modalCargandoTurno" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-white text-dark text-center">
+                <div class="modal-body py-4">
+                    <h5 class="mb-3">Solicitando turno...</h5>
+                    <i class="fas fa-spinner fa-spin fa-2x text-warning"></i>
                 </div>
             </div>
         </div>

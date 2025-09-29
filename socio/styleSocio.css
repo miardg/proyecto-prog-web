@@ -23,10 +23,10 @@
 }
 
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: var(--dark-gray);
-    background-color: var(--primary-yellow);
+    color: #343a40;
+    background-color: #f8f9fa;
     padding-top: 70px;
 }
 

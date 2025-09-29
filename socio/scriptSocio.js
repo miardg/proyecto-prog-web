@@ -11,6 +11,7 @@ window.onload = function () {
     cargarPersonalTrainer();
     cargarTablaRutinas();
     cargarTablaAlimentacion();
+    descargarPDFalimentacion();
 };
 
 function obtenerClases() {
@@ -252,17 +253,20 @@ function cargarPersonalTrainer() {
     card.className = "col-md-6 offset-md-3";
 
     card.innerHTML = `
-      <div class="card card-socio h-100 text-center">
-        <div class="card-body">
-          <i class="fas fa-user-tie display-5 text-warning mb-3"></i>
-          <h5 class="card-title">Tu Entrenador</h5>
-          <p class="card-text"><strong>Nombre:</strong> Juan Pérez</p>
-          <p class="card-text"><strong>Objetivo actual:</strong> Mejorar resistencia y tonificar</p>
-          <p class="card-text"><strong>Próxima sesión:</strong> Martes 1/10 - 18:00 hs</p>
-          <button id="btnHistorialTrainer" class="btn btn-outline-warning w-100 mt-3">Ver Historial</button>
-        </div>
+  <div class="card card-socio h-100 text-center">
+    <div class="card-body">
+      <i class="fas fa-user-tie display-5 text-warning mb-3"></i>
+      <h5 class="card-title">Tu Entrenador</h5>
+      <p class="card-text"><strong>Nombre:</strong> Juan Pérez</p>
+      <p class="card-text"><strong>Objetivo actual:</strong> Mejorar resistencia y tonificar</p>
+      <p class="card-text"><strong>Próxima sesión:</strong> Martes 1/10 - 18:00 hs</p>
+      <div class="d-flex justify-content-center gap-3 mt-4">
+        <button id="btnHistorialTrainer" class="btn btn-outline-warning">Ver Historial</button>
+        <button id="btnSolicitarTrainer" class="btn btn-warning">Solicitar Sesión</button>
       </div>
-    `;
+    </div>
+  </div>
+`;
 
     contenedor.appendChild(card);
 
@@ -272,6 +276,18 @@ function cargarPersonalTrainer() {
         btn.addEventListener("click", () => {
             let modal = new bootstrap.Modal(document.getElementById("modalHistorialTrainer"));
             modal.show();
+        });
+    }
+    
+    let btnSolicitar = document.getElementById("btnSolicitarTrainer");
+    if (btnSolicitar) {
+        btnSolicitar.addEventListener("click", () => {
+            let modalCargando = new bootstrap.Modal(document.getElementById("modalCargandoTurno"));
+            modalCargando.show();
+
+            setTimeout(() => {
+                modalCargando.hide();
+            }, 2000); // se cierra después de 2 segundos
         });
     }
 }
@@ -323,5 +339,19 @@ function cargarTablaAlimentacion() {
         <td>${c.calorias}</td>
       `;
         tabla.appendChild(fila);
+    });
+}
+
+function descargarPDFalimentacion() {
+    let btnDescargar = document.getElementById("btnDescargarPDF");
+    let modal = new bootstrap.Modal(document.getElementById("modalDescargaPDF"));
+
+    btnDescargar.addEventListener("click", () => {
+        modal.show();
+
+        // Simula cierre automático después de 2.5 segundos
+        setTimeout(() => {
+            modal.hide();
+        }, 2500);
     });
 }
