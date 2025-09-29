@@ -1,4 +1,13 @@
 window.onload = function () {
+  // Usuarios de prueba para la navegacion del front
+  const usuariosPrueba = [
+    { email: "profesional@gmail.com", password: "123456", rol: "profesionales" },
+    { email: "profesor@gmail.com", password: "123456", rol: "profesor" },
+    { email: "socio@gmail.com", password: "123456", rol: "socios" },
+    { email: "administrador@gmail.com", password: "123456", rol: "administrador" },
+    { email: "administrativo@gmail.com", password: "123456", rol: "administrativo" }
+  ];
+
   // ---------------------- NAVBAR ----------------------
   let navbar = document.querySelector(".navbar");
   let navbarCollapse = document.querySelector(".navbar-collapse");
@@ -66,10 +75,19 @@ window.onload = function () {
       }
 
       if (valido) {
-        mostrarModal("Éxito", "Inicio de sesión correcto. Redirigiendo...");
-        btnClose.addEventListener("click", function () {
-          window.location.href = "dashboard.html"; // todavia no existe
-        });
+        // Buscar el usuario de prueba
+        const usuario = usuariosPrueba.find(
+          u => u.email === loginEmail.value.trim() && u.password === loginPassword.value.trim()
+        );
+
+        if (usuario) {
+          mostrarModal("Éxito", "Inicio de sesión correcto. Redirigiendo...");
+          btnClose.addEventListener("click", function () {
+            window.location.href = `../${usuario.rol}/index.html`;
+          }, { once: true });
+        } else {
+          mostrarModal("Error", "Usuario o contraseña incorrectos.");
+        }
       } else {
         mostrarModal("Error", "Revise los campos de inicio de sesión.");
       }
@@ -81,6 +99,7 @@ window.onload = function () {
   if (formRegistro) {
     let nombre = document.getElementById("nombre");
     let apellido = document.getElementById("apellido");
+    let dni = document.getElementById("dni"); // 👈 nuevo campo
     let emailRegistro = document.getElementById("email");
     let telefono = document.getElementById("telefono");
     let pass1 = document.getElementById("password");
@@ -109,6 +128,15 @@ window.onload = function () {
       } else {
         apellido.classList.remove("is-invalid");
         apellido.classList.add("is-valid");
+      }
+
+      // Validar DNI (7-8 dígitos numéricos)
+      if (dni.value.length < 7 || dni.value.length > 8) {
+        dni.classList.add("is-invalid");
+        valido = false;
+      } else {
+        dni.classList.remove("is-invalid");
+        dni.classList.add("is-valid");
       }
 
       // Validar email
@@ -161,6 +189,7 @@ window.onload = function () {
       }
     });
   }
+
 
   // ---------------------- ANIMACIONES SIMPLES ----------------------
   let elementos = document.querySelectorAll(".stat-item, .feature-icon");
