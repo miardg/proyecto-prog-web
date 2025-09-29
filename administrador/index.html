@@ -1,155 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin - Entradas | KynetikGym</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <link href="styles.css" rel="stylesheet">
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-  <script src="main.js" defer></script> 
-  <script src="admin-entradas.js" defer></script> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - KynetikGym</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="admin-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html">
-        <i class="fas fa-dumbbell text-warning me-2"></i>KynetikGym - Admin
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAdmin">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAdmin">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="admin-dashboard.html">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html">Entradas</a></li>
-          <li class="nav-item"><a class="nav-link active" href="admin-usuarios.html">Usuarios</a></li>
-          <li class="nav-item"><a class="nav-link" href="admin-planes.html">Planes</a></li>
-          <li class="nav-item"><a class="nav-link" href="admin-clases.html">Clases</a></li>
-          <li class="nav-item"><a class="nav-link" href="admin-beneficios.html">Beneficios</a></li>
 
-        </ul>
-        <div class="d-flex">
-          <a href="index.html" class="btn btn-outline-light me-2">Ver sitio</a>
-          <a href="#" class="btn btn-warning">Cerrar sesión</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+<body class="bg-light">
 
-  <main class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
-      <div>
-        <h2 class="fw-bold">Gestión de Entradas</h2>
-        <p class="text-muted mb-0">Crear, buscar, editar, publicar y eliminar entradas</p>
-      </div>
-      <div class="d-flex gap-2">
-        <input id="searchInput" class="form-control" style="min-width:250px;" placeholder="Buscar por título o autor...">
-        <button class="btn btn-warning btn-create-entry"><i class="fas fa-plus me-2"></i>Crear Entrada</button>
-      </div>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table table-hover align-middle">
-        <thead class="table-dark">
-          <tr>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th class="text-end">Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="entriesTbody">
-          <!-- Renderizado por JS -->
-        </tbody>
-      </table>
-    </div>
-  </main>
-
-  <!-- MODAL: Crear / Editar Entrada -->
-  <div class="modal fade" id="entryModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <form id="entryForm" novalidate>
-          <div class="modal-header">
-            <h5 class="modal-title" id="entryModalTitle">Crear Entrada</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" id="entryId" value="">
-            <div class="mb-3">
-              <label class="form-label">Título</label>
-              <input id="entryTitle" class="form-control" placeholder="Título de la entrada">
-              <div class="invalid-feedback">El título debe tener al menos 3 caracteres.</div>
+    <!-- NAV -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="admin-index.html">
+                <i class="fas fa-dumbbell text-warning me-2"></i>KynetikGym - Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAdmin">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAdmin">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin-usuarios.html">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin-planes.html">Planes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin-clases.html">Clases</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="../invitado/login.html" class="btn btn-warning">Cerrar sesión</a>
+                </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Autor</label>
-              <input id="entryAuthor" class="form-control" placeholder="Nombre del autor">
-              <div class="invalid-feedback">Ingrese un autor válido (min 3 caracteres).</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Fecha</label>
-              <input id="entryDate" type="date" class="form-control">
-              <div class="invalid-feedback">Seleccione una fecha.</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Extracto</label>
-              <input id="entryExcerpt" class="form-control" placeholder="Pequeña descripción (opcional)">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Contenido</label>
-              <textarea id="entryContent" class="form-control" rows="6" placeholder="Contenido de la entrada"></textarea>
-              <div class="invalid-feedback">El contenido debe tener al menos 10 caracteres.</div>
-            </div>
-            <div class="form-text">Nota: Puedes simular una imagen pegando una URL en el contenido o agregarla luego.</div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-warning">Guardar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+        </div>
+    </nav>
 
-  <!-- MODAL: Confirmar eliminación -->
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirmar eliminación</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <p>¿Seguro que querés eliminar esta entrada? Esta acción no se puede deshacer.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger btn-confirm-delete">Eliminar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- CONTENIDO -->
+    <main class="container py-5 pt-5">
+        <h1 class="mb-3 mt-4 text-center fw-bold">Panel de Administración</h1>
+        <p class="text-center text-muted mb-5">Bienvenido al panel de control de KynetikGym. Selecciona una sección para
+            comenzar.</p>
 
-  <!-- MODAL: Feedback (reutiliza el modal que ya usa main.js) -->
-  <div class="modal fade" id="modalFeedback" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 id="modal-title" class="modal-title">Título</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <div class="row g-4 admin-cards">
+            <!-- Usuarios -->
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="card admin-card shadow-sm h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-4x mb-3 text-primary"></i>
+                        <h4 class="card-title mb-2">Usuarios</h4>
+                        <p class="card-text text-muted mb-3">Gestión de usuarios: creación, edición, roles y estado.</p>
+                        <a href="admin-usuarios.html" class="btn btn-outline-primary">Ver usuarios</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planes -->
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="card admin-card shadow-sm h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-dumbbell fa-4x mb-3 text-success"></i>
+                        <h4 class="card-title mb-2">Planes</h4>
+                        <p class="card-text text-muted mb-3">Configura y administra los planes de entrenamiento.</p>
+                        <a href="admin-planes.html" class="btn btn-outline-success">Ver planes</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clases -->
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="card admin-card shadow-sm h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-chalkboard-teacher fa-4x mb-3 text-danger"></i>
+                        <h4 class="card-title mb-2">Clases</h4>
+                        <p class="card-text text-muted mb-3">Crea y gestiona las clases disponibles en el gimnasio.</p>
+                        <a href="admin-clases.html" class="btn btn-outline-danger">Ver clases</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="modal-body" id="modal-body">Mensaje</div>
-        <div class="modal-footer">
-          <button id="btnClose" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+    </main>
 
 </body>
+
 </html>

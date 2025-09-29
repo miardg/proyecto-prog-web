@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,11 +14,12 @@
   <script src="main.js" defer></script>
   <script src="admin-usuarios.js" defer></script>
 </head>
+
 <body>
-  <!-- NAV -->
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html">
+      <a class="navbar-brand fw-bold" href="admin-index.html">
         <i class="fas fa-dumbbell text-warning me-2"></i>KynetikGym - Admin
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAdmin">
@@ -25,29 +27,26 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAdmin">
         <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html">Entradas</a></li>
+          <li class="nav-item"><a class="nav-link " href="index.html">Dashboard</a></li>
           <li class="nav-item"><a class="nav-link active" href="admin-usuarios.html">Usuarios</a></li>
           <li class="nav-item"><a class="nav-link" href="admin-planes.html">Planes</a></li>
           <li class="nav-item"><a class="nav-link" href="admin-clases.html">Clases</a></li>
-          <li class="nav-item"><a class="nav-link" href="admin-beneficios.html">Beneficios</a></li>
         </ul>
         <div class="d-flex">
-          <a href="index.html" class="btn btn-outline-light me-2">Ver sitio</a>
-          <a href="#" class="btn btn-warning">Cerrar sesión</a>
+          <a href="../invitado/login.html" class="btn btn-warning">Cerrar sesión</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <main class="container py-5" style="padding-top:100px;">
+  <main class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
         <h2 class="fw-bold mt-4">Gestión de Usuarios</h2>
         <p class="text-muted mb-0">Crear, buscar, modificar y eliminar usuarios</p>
       </div>
       <div class="d-flex gap-2">
-        <input id="searchUserInput" class="form-control" style="min-width:250px;" placeholder="Buscar por nombre o email...">
+        <input id="searchUserInput" class="form-control" placeholder="Buscar por nombre o email...">
         <button class="btn btn-warning btn-create-user"><i class="fas fa-user-plus me-2"></i>Crear Usuario</button>
       </div>
     </div>
@@ -69,62 +68,56 @@
     </div>
   </main>
 
-  <!-- MODAL: Crear / Editar Usuario -->
-  <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <form id="userForm" novalidate>
-          <div class="modal-header">
-            <h5 class="modal-title" id="userModalTitle">Crear Usuario</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+  <!-- Modal Crear / Editar Usuario -->
+  <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="userForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userModalTitle">Crear Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="userId">
+          <div class="mb-3">
+            <label for="userName" class="form-label">Nombre</label>
+            <input type="text" id="userName" class="form-control" required>
           </div>
-          <div class="modal-body">
-            <input type="hidden" id="userId" value="">
-            <div class="mb-3">
-              <label class="form-label">Nombre</label>
-              <input id="userName" class="form-control" placeholder="Nombre completo">
-              <div class="invalid-feedback">El nombre debe tener al menos 3 caracteres.</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input id="userEmail" type="email" class="form-control" placeholder="ejemplo@correo.com">
-              <div class="invalid-feedback">Ingrese un email válido.</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Rol</label>
-              <select id="userRole" class="form-select">
-                <option value="">Seleccione un rol</option>
-                <option value="admin">Administrador</option>
-                <option value="trainer">Entrenador</option>
-                <option value="member">Socio</option>
-              </select>
-              <div class="invalid-feedback">Debe seleccionar un rol.</div>
-            </div>
-            <div class="mb-3 password-group">
-              <label class="form-label">Contraseña</label>
-              <input id="userPassword" type="password" class="form-control" placeholder="Mínimo 6 caracteres">
-              <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
-            </div>
+          <div class="mb-3">
+            <label for="userEmail" class="form-label">Email</label>
+            <input type="email" id="userEmail" class="form-control" required>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-warning">Guardar</button>
+          <div class="mb-3">
+            <label for="userRole" class="form-label">Rol</label>
+            <select id="userRole" class="form-select" required>
+              <option value="">Seleccionar</option>
+              <option value="admin">Admin</option>
+              <option value="member">Miembro</option>
+              <option value="trainer">Trainer</option>
+            </select>
           </div>
-        </form>
-      </div>
+          <div class="mb-3">
+            <label for="userPassword" class="form-label">Contraseña</label>
+            <input type="password" id="userPassword" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- MODAL: Confirmar eliminación -->
+  <!-- Modal Confirmar Eliminar Usuario -->
   <div class="modal fade" id="confirmDeleteUserModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Confirmar eliminación</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <h5 class="modal-title">Confirmar Eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <p>¿Seguro que querés eliminar este usuario?</p>
+          ¿Estás seguro que deseas eliminar este usuario?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -134,21 +127,51 @@
     </div>
   </div>
 
-  <!-- MODAL: Feedback -->
+  <!-- Modal Feedback -->
   <div class="modal fade" id="modalFeedback" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="modal-title" class="modal-title">Título</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <h5 class="modal-title" id="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" id="modal-body">Mensaje</div>
+        <div class="modal-body" id="modal-body"></div>
         <div class="modal-footer">
-          <button id="btnClose" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Modal Detalle Usuario -->
+  <div class="modal fade" id="userDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Detalle de Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group mb-3">
+            <li class="list-group-item"><strong>Nombre:</strong> <span id="detailName"></span></li>
+            <li class="list-group-item"><strong>Email:</strong> <span id="detailEmail"></span></li>
+            <li class="list-group-item"><strong>Rol:</strong> <span id="detailRole"></span></li>
+            <li class="list-group-item"><strong>Plan asignado:</strong> <span id="detailPlan"></span> (<span
+                id="detailPlanEnd"></span>)</li>
+          </ul>
+          <h6>Pagos:</h6>
+          <ul class="list-group mb-3" id="detailPayments"></ul>
+          <h6>Cuotas:</h6>
+          <ul class="list-group" id="detailCuotas"></ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </body>
+
 </html>

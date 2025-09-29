@@ -1,164 +1,122 @@
-
-document.addEventListener("DOMContentLoaded", () => {
-  const plansTbody = document.getElementById("plansTbody");
-  const searchPlanInput = document.getElementById("searchPlanInput");
-  const planModal = new bootstrap.Modal(document.getElementById("planModal"));
-  const planForm = document.getElementById("planForm");
-  const planModalTitle = document.getElementById("planModalTitle");
-  const planIdInput = document.getElementById("planId");
-  const planNameInput = document.getElementById("planName");
-  const planPriceInput = document.getElementById("planPrice");
-  const planDurationInput = document.getElementById("planDuration");
-  const confirmDeletePlanModal = new bootstrap.Modal(document.getElementById("confirmDeletePlanModal"));
-  const btnConfirmDeletePlan = document.querySelector(".btn-confirm-delete-plan");
-
-  let plans = [
-    { id: 1, name: "Plan Básico", price: 50, duration: 1 },
-    { id: 2, name: "Plan Premium", price: 120, duration: 3 },
-  ];
-
-  let planToDeleteId = null;
-
-  // Función para renderizar la tabla
-  function renderPlans(filter = "") {
-    plansTbody.innerHTML = "";
-    const filteredPlans = plans.filter(plan =>
-      plan.name.toLowerCase().includes(filter.toLowerCase())
-    );
-
-    filteredPlans.forEach(plan => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${plan.name}</td>
-        <td>$${plan.price}</td>
-        <td>${plan.duration}</td>
-        <td class="text-end">
-          <button class="btn btn-sm btn-warning btn-edit-plan me-2" data-id="${plan.id}">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="btn btn-sm btn-danger btn-delete-plan" data-id="${plan.id}">
-            <i class="fas fa-trash"></i>
-          </button>
-        </td>
-      `;
-      plansTbody.appendChild(tr);
-    });
-
-    // Agregar eventos a los botones después de renderizar
-    document.querySelectorAll(".btn-edit-plan").forEach(btn => {
-      btn.addEventListener("click", () => openEditPlanModal(btn.dataset.id));
-    });
-
-    document.querySelectorAll(".btn-delete-plan").forEach(btn => {
-      btn.addEventListener("click", () => openDeletePlanModal(btn.dataset.id));
-    });
+// ===== Simulación de base de datos =====
+let plans = [
+  {
+    id: 1,
+    name: "Básico",
+    price: 5000,
+    services: "Acceso libre a sala de máquinas; 4 clases particulares/mes",
+    details: "No incluye nutricionista ni personal trainer; sin plan de alimentación ni rutinas"
+  },
+  {
+    id: 2,
+    name: "Standard",
+    price: 8000,
+    services: "Acceso libre a sala de máquinas; clases particulares ilimitadas",
+    details: "1 consulta trimestral con nutricionista; rutinas genéricas disponibles; sin personal trainer"
+  },
+  {
+    id: 3,
+    name: "Premium",
+    price: 12000,
+    services: "Acceso libre a sala de máquinas; clases particulares ilimitadas",
+    details: "1 consulta mensual con nutricionista; 2 sesiones mensuales con personal trainer; plan de alimentación y rutinas personalizadas"
+  },
+  {
+    id: 4,
+    name: "Elite",
+    price: 18000,
+    services: "Acceso libre a sala de máquinas; clases particulares ilimitadas",
+    details: "2 consultas mensuales con nutricionista; 4 sesiones mensuales con personal trainer; plan de alimentación y rutinas totalmente personalizadas"
   }
+];
 
-  // Abrir modal para crear plan
-  document.querySelector(".btn-create-plan").addEventListener("click", () => {
-    planModalTitle.textContent = "Crear Plan";
-    planIdInput.value = "";
-    planNameInput.value = "";
-    planPriceInput.value = "";
-    planDurationInput.value = "";
-    planModal.show();
+let editPlanId = null;
+
+// ===== Referencias DOM =====
+const plansTbody = document.getElementById("plansTbody");
+const planModal = new bootstrap.Modal(document.getElementById("planModal"));
+const planForm = document.getElementById("planForm");
+const planModalTitle = document.getElementById("planModalTitle");
+const planIdInput = document.getElementById("planId");
+const planNameInput = document.getElementById("planName");
+const planPriceInput = document.getElementById("planPrice");
+const planServicesInput = document.getElementById("planServices");
+const planDetailsInput = document.getElementById("planDetails");
+
+// ===== Renderizado =====
+function renderPlans() {
+  plansTbody.innerHTML = "";
+  plans.forEach(plan => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${plan.name}</td>
+      <td>$${plan.price.toLocaleString()}</td>
+      <td>${plan.services}</td>
+      <td>${plan.details}</td>
+      <td class="text-end">
+        <button class="btn btn-sm btn-warning btn-edit-plan"><i class="fas fa-edit"></i> Editar</button>
+      </td>
+    `;
+    tr.querySelector(".btn-edit-plan").addEventListener("click", () => openEditPlanModal(plan));
+    plansTbody.appendChild(tr);
   });
+}
 
-  // Abrir modal para editar plan
-  function openEditPlanModal(id) {
-    const plan = plans.find(p => p.id == id);
-    if (!plan) return;
+// ===== Editar Plan =====
+function openEditPlanModal(plan) {
+  editPlanId = plan.id;
+  planModalTitle.textContent = `Editar Plan: ${plan.name}`;
+  planIdInput.value = plan.id;
+  planNameInput.value = plan.name;
+  planPriceInput.value = plan.price;
+  planServicesInput.value = plan.services;
+  planDetailsInput.value = plan.details;
+  planModal.show();
+}
 
-    planModalTitle.textContent = "Editar Plan";
-    planIdInput.value = plan.id;
-    planNameInput.value = plan.name;
-    planPriceInput.value = plan.price;
-    planDurationInput.value = plan.duration;
-    planModal.show();
-  }
-
-  // Guardar plan (crear o editar)
-  planForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const id = planIdInput.value;
-  const name = planNameInput.value.trim();
-  const price = parseFloat(planPriceInput.value);
-  const duration = parseInt(planDurationInput.value);
-
-  // Resetear clases de validación
-  planNameInput.classList.remove("is-invalid");
-  planPriceInput.classList.remove("is-invalid");
-  planDurationInput.classList.remove("is-invalid");
-
+// ===== Validación simple =====
+function validatePlanForm() {
   let valid = true;
 
-  if (name.length < 3) {
+  if (!planNameInput.value.trim()) {
     planNameInput.classList.add("is-invalid");
     valid = false;
-  }
-  if (isNaN(price) || price <= 0) {
+  } else planNameInput.classList.remove("is-invalid");
+
+  if (!planPriceInput.value || parseFloat(planPriceInput.value) <= 0) {
     planPriceInput.classList.add("is-invalid");
     valid = false;
-  }
-  if (isNaN(duration) || duration <= 0) {
-    planDurationInput.classList.add("is-invalid");
+  } else planPriceInput.classList.remove("is-invalid");
+
+  if (!planServicesInput.value.trim()) {
+    planServicesInput.classList.add("is-invalid");
     valid = false;
+  } else planServicesInput.classList.remove("is-invalid");
+
+  if (!planDetailsInput.value.trim()) {
+    planDetailsInput.classList.add("is-invalid");
+    valid = false;
+  } else planDetailsInput.classList.remove("is-invalid");
+
+  return valid;
+}
+
+// ===== Guardar cambios =====
+planForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!validatePlanForm()) return;
+
+  const index = plans.findIndex(p => p.id === editPlanId);
+  if (index !== -1) {
+    plans[index].name = planNameInput.value.trim();
+    plans[index].price = parseFloat(planPriceInput.value);
+    plans[index].services = planServicesInput.value.trim();
+    plans[index].details = planDetailsInput.value.trim();
   }
 
-  if (!valid) return; // si hay errores, no continuar
-
-  if (id) {
-    // Editar plan
-    const plan = plans.find(p => p.id == id);
-    plan.name = name;
-    plan.price = price;
-    plan.duration = duration;
-    showModalFeedback("Éxito", "Plan modificado correctamente.");
-  } else {
-    // Crear nuevo plan
-    const newPlan = {
-      id: plans.length ? plans[plans.length - 1].id + 1 : 1,
-      name,
-      price,
-      duration
-    };
-    plans.push(newPlan);
-    showModalFeedback("Éxito", "Plan creado correctamente.");
-  }
-
-  planModal.hide();
-  renderPlans(searchPlanInput.value);
-});
-
-
-  // Abrir modal de confirmación de eliminación
-  function openDeletePlanModal(id) {
-    planToDeleteId = id;
-    confirmDeletePlanModal.show();
-  }
-
-  // Confirmar eliminación
-  btnConfirmDeletePlan.addEventListener("click", () => {
-    plans = plans.filter(p => p.id != planToDeleteId);
-    renderPlans(searchPlanInput.value);
-    confirmDeletePlanModal.hide();
-    showModalFeedback("Éxito", "Plan eliminado correctamente.");
-  });
-
-  // Buscar planes
-  searchPlanInput.addEventListener("input", () => {
-    renderPlans(searchPlanInput.value);
-  });
-
-  // Función para mostrar feedback
-  function showModalFeedback(title, message) {
-    const modal = new bootstrap.Modal(document.getElementById("modalFeedback"));
-    document.getElementById("modal-title").textContent = title;
-    document.getElementById("modal-body").textContent = message;
-    modal.show();
-  }
-
-  // Render inicial
   renderPlans();
+  planModal.hide();
 });
+
+// ===== Inicial =====
+renderPlans();
