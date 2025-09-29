@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin - Clases | KynetikGym</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="main.js" defer></script> 
+  <script src="admin-clases.js" defer></script>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <i class="fas fa-dumbbell text-warning me-2"></i>KynetikGym - Admin
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAdmin">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAdmin">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-usuarios.html">Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-planes.html">Planes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="admin-clases.html">Clases</a></li>
+        </ul>
+        <div class="d-flex">
+          <a href="../invitado/login.html" class="btn btn-warning">Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold mt-4">Gestión de Clases</h2>
+        <p class="text-muted mb-0">Crear, buscar, modificar, eliminar y publicar clases</p>
+      </div>
+      <div class="d-flex gap-2">
+        <input id="searchClassInput" class="form-control" placeholder="Buscar por nombre o instructor...">
+        <button class="btn btn-warning btn-create-class"><i class="fas fa-plus me-2"></i>Crear Clase</button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Nombre</th>
+            <th>Instructor</th>
+            <th>Fecha / Hora</th>
+            <th>Capacidad</th>
+            <th>Salón</th>
+            <th>Estado</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="classesTbody">
+          <!-- Renderizado por JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- MODAL: Crear / Editar Clase -->
+  <div class="modal fade" id="classModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <form id="classForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title" id="classModalTitle">Crear Clase</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="classId" value="">
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input id="className" class="form-control" placeholder="Nombre de la clase">
+              <div class="invalid-feedback">Debe ingresar un nombre.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Instructor</label>
+              <input id="classInstructor" class="form-control" placeholder="Nombre del instructor">
+              <div class="invalid-feedback">Debe ingresar un instructor.</div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label class="form-label">Fecha</label>
+                <input id="classDate" type="date" class="form-control">
+                <div class="invalid-feedback">Debe seleccionar una fecha.</div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label">Hora</label>
+                <input id="classTime" type="time" class="form-control">
+                <div class="invalid-feedback">Debe seleccionar una hora.</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Capacidad</label>
+              <input id="classCapacity" type="number" class="form-control" placeholder="Cantidad máxima de asistentes">
+              <div class="invalid-feedback">Debe ingresar una capacidad válida.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Salón</label>
+              <input id="classRoom" class="form-control" placeholder="Ubicación o salón">
+              <div class="invalid-feedback">Debe ingresar un salón.</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-warning">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Feedback -->
+  <div class="modal fade" id="modalFeedback" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="modal-title" class="modal-title">Título</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body" id="modal-body">Mensaje</div>
+        <div class="modal-footer">
+          <button id="btnClose" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
