@@ -1,0 +1,284 @@
+
+:root {
+  --primary-yellow: #ffc107;
+  --dark-yellow: #e0a800;
+  --light-yellow: #fff3cd;
+  --primary-black: #000000;
+  --dark-gray: #212529;
+  --medium-gray: #6c757d;
+  --light-gray: #f8f9fa;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--dark-gray);
+ 
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+
+#calendar {
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 30px;
+}
+
+
+#calendar .fc-toolbar-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--dark-gray);
+}
+
+
+.fc .fc-button {
+  background-color: var(--primary-yellow);
+  border: none;
+  color: var(--primary-black);
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 6px 12px;
+  transition: all 0.3s ease;
+}
+
+.fc .fc-button:hover {
+  background-color: var(--dark-yellow);
+}
+
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: var(--light-yellow);
+}
+
+
+.fc-event {
+  background-color: var(--primary-yellow);
+  border: 1px solid var(--dark-yellow);
+  color: var(--primary-black);
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 2px 4px;
+}
+
+
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--primary-yellow) !important;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.hero-image {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+
+.btn-warning {
+  background-color: var(--primary-yellow);
+  border-color: var(--primary-yellow);
+  color: var(--primary-black);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: var(--dark-yellow);
+  border-color: var(--dark-yellow);
+  color: var(--primary-black);
+  transform: translateY(-2px);
+}
+
+.btn-outline-warning {
+  color: var(--primary-yellow);
+  border-color: var(--primary-yellow);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+  background-color: var(--primary-yellow);
+  border-color: var(--primary-yellow);
+  color: var(--primary-black);
+  transform: translateY(-2px);
+}
+
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.feature-icon {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+
+.stat-item {
+  transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: scale(1.05);
+}
+
+
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-yellow);
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--dark-gray);
+}
+
+
+.auth-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%);
+}
+
+.auth-card {
+  background: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+
+.plan-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.plan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.plan-featured {
+  border: 3px solid var(--primary-yellow);
+  position: relative;
+}
+
+.plan-featured::before {
+  content: "Más Popular";
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background: var(--primary-yellow);
+  color: var(--primary-black);
+  padding: 5px 40px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transform: rotate(45deg);
+}
+
+
+@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+    padding-top: 100px;
+  }
+
+  .display-4 {
+    font-size: 2.5rem;
+  }
+
+  .hero-image {
+    margin-top: 2rem;
+  }
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.clases-calendario {
+  background-color: #ffc107 !important;
+  border-color: #856404 !important;
+  color: #000 !important;
+}
+
+#mainAsistencia {
+
+  margin-top: 80px;
+
+}
