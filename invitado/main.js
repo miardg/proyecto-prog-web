@@ -3,7 +3,7 @@ window.onload = function () {
   const usuariosPrueba = [
     { email: "profesional@gmail.com", password: "123456", rol: "profesionales" },
     { email: "profesor@gmail.com", password: "123456", rol: "profesor" },
-    { email: "socio@gmail.com", password: "123456", rol: "socios" },
+    { email: "socio@gmail.com", password: "123456", rol: "socio" },
     { email: "administrador@gmail.com", password: "123456", rol: "administrador" },
     { email: "administrativo@gmail.com", password: "123456", rol: "administrativo" }
   ];
