@@ -10,7 +10,6 @@ window.onload = function () {
     inicializarSaludYProgreso(planSocio);
     cargarPersonalTrainer();
     cargarTablaRutinas();
-    cargarTablaAlimentacion();
     descargarPDFalimentacion();
 };
 
@@ -52,36 +51,47 @@ function inicializarSaludYProgreso(plan) {
     }
 }
 
+//FUNCION PARA LOS ICONOS DE LAS CLASES DEL USUARIO
+function obtenerIconoClase(nombre) {
+    let iconos = {
+        Funcional: "fa-dumbbell",
+        Crossfit: "fa-fire",
+        Yoga: "fa-spa",
+        HIIT: "fa-bolt",
+        Powerlifting: "fa-weight-hanging",
+        Spinning: "fa-bicycle"
+    };
+    return iconos[nombre] || "fa-running";
+}
+
 function inicializarClases(clases, planSocio) {
     let contenedor = document.getElementById("clasesDisponibles");
     if (!contenedor) return;
 
     clases.forEach(clase => {
-        let tarjeta = document.createElement("div");
-        tarjeta.className = "col-md-4";
+        let icono = obtenerIconoClase(clase.nombre);
 
-        tarjeta.innerHTML = `
-        <div class="card card-socio h-100 text-center">
-          <div class="card-body">
-            <i class="fas fa-calendar-check display-5 text-warning mb-3"></i>
-            <h5 class="card-title">${clase.nombre}</h5>
-            <p class="card-text"><strong>Día:</strong> ${clase.dia}</p>
-            <p class="card-text"><strong>Horario:</strong> ${clase.horario}</p>
-            <p class="card-text"><strong>Tipo:</strong> ${clase.tipo}</p>
-            <button class="btn btn-outline-warning w-100 mt-3 btn-anotarse" data-id="${clase.id}">Anotarse</button>
-          </div>
-        </div>
-      `;
+        let card = document.createElement("div");
+        card.className = "col-md-4";
 
-        contenedor.appendChild(tarjeta);
-    });
+        card.innerHTML = `
+  <div class="card card-socio h-100 text-center">
+    <div class="card-body">
+      <i class="fas ${icono} display-5 text-warning mb-3"></i>
+      <h5 class="card-title">${clase.nombre}</h5>
+      <p class="card-text">${clase.dia} - ${clase.horario}</p>
+      <button class="btn btn-warning w-100">Reservar</button>
+    </div>
+  </div>
+`;
 
-    contenedor.addEventListener("click", (e) => {
-        if (e.target.classList.contains("btn-anotarse")) {
-            let id = parseInt(e.target.getAttribute("data-id"));
-            let claseSeleccionada = clases.find(c => c.id === id);
-            mostrarModalClase(claseSeleccionada, planSocio);
-        }
+        // Asignar evento al botón
+        let btn = card.querySelector("button");
+        btn.addEventListener("click", () => {
+            mostrarModalClase(clase, planSocio);
+        });
+
+        contenedor.appendChild(card);
     });
 }
 
@@ -138,6 +148,16 @@ function mostrarModalClase(clase, planSocio) {
     modal.show();
 }
 
+function obtenerIconoBeneficio(tipo) {
+    let iconos = {
+        Descuento: "fa-tag",
+        Producto: "fa-gift",
+        Servicio: "fa-concierge-bell",
+        Evento: "fa-calendar-check"
+    };
+    return iconos[tipo] || "fa-star";
+}
+
 function inicializarTabla(lista) {
     let tabla = document.getElementById("tablaBeneficios");
     if (!tabla) return;
@@ -145,21 +165,22 @@ function inicializarTabla(lista) {
     tabla.innerHTML = "";
 
     lista.forEach(b => {
+        let icono = obtenerIconoBeneficio(b.tipo);
         let fila = document.createElement("tr");
         fila.innerHTML = `
-            <td>${b.nombre}</td>
-            <td>${b.tipo}</td>
-            <td>${b.descripcion}</td>
-            <td>
-                <button 
-                    class="btn btn-sm ${b.canjeado ? 'btn-outline-warning' : 'btn-outline-success'} fw-bold"
-                    data-id="${b.id}"
-                    data-action="${b.canjeado ? 'descanjear' : 'canjear'}"
-                >
-                    ${b.canjeado ? 'Deshacer' : 'Canjear'}
-                </button>
-            </td>
-            `;
+  <td><i class="fas ${icono} text-warning me-2"></i>${b.nombre}</td>
+  <td>${b.tipo}</td>
+  <td>${b.descripcion}</td>
+  <td>
+    <button 
+      class="btn btn-sm ${b.canjeado ? 'btn-outline-warning' : 'btn-outline-success'} fw-bold"
+      data-id="${b.id}"
+      data-action="${b.canjeado ? 'descanjear' : 'canjear'}"
+    >
+      ${b.canjeado ? 'Deshacer' : 'Canjear'}
+    </button>
+  </td>
+`;
         tabla.appendChild(fila);
     });
 
@@ -206,7 +227,6 @@ function inicializarRedirecciones() {
     asignarRedireccion("btnPlan", "planSocio.html");
     asignarRedireccion("btnBeneficios", "beneficiosSocio.html");
     asignarRedireccion("btnRutinas", "rutinaSocio.html");
-    asignarRedireccion("btnAlimentacion", "alimentacionSocio.html");
     asignarRedireccion("btnPersonalTrainer", "personalTrainerSocio.html");
 }
 
@@ -278,7 +298,7 @@ function cargarPersonalTrainer() {
             modal.show();
         });
     }
-    
+
     let btnSolicitar = document.getElementById("btnSolicitarTrainer");
     if (btnSolicitar) {
         btnSolicitar.addEventListener("click", () => {
@@ -290,6 +310,17 @@ function cargarPersonalTrainer() {
             }, 2000); // se cierra después de 2 segundos
         });
     }
+}
+
+function obtenerIconoRutina(nombre) {
+    let iconos = {
+        "Fuerza tren inferior": "fa-running",
+        "Fuerza tren superior": "fa-dumbbell",
+        "Cardio HIIT": "fa-bolt",
+        "Core + movilidad": "fa-child",
+        "Full body": "fa-person-running"
+    };
+    return iconos[nombre] || "fa-star";
 }
 
 function cargarTablaRutinas() {
@@ -307,44 +338,21 @@ function cargarTablaRutinas() {
     tabla.innerHTML = ""; // Limpieza previa
 
     rutinas.forEach(r => {
+        let icono = obtenerIconoRutina(r.rutina);
         let fila = document.createElement("tr");
         fila.innerHTML = `
-        <td>${r.dia}</td>
-        <td>${r.rutina}</td>
-        <td>${r.objetivo}</td>
-        <td>${r.duracion}</td>
-      `;
-        tabla.appendChild(fila);
-    });
-}
-
-function cargarTablaAlimentacion() {
-    let comidas = [
-        { dia: "Lunes", comida: "Ensalada de pollo + arroz integral", tipo: "Almuerzo", calorias: "550 kcal" },
-        { dia: "Martes", comida: "Omelette + tostadas", tipo: "Desayuno", calorias: "400 kcal" },
-        { dia: "Miércoles", comida: "Salmón + puré de calabaza", tipo: "Cena", calorias: "600 kcal" },
-        { dia: "Jueves", comida: "Wrap de vegetales + yogur", tipo: "Almuerzo", calorias: "480 kcal" },
-        { dia: "Viernes", comida: "Batido proteico + banana", tipo: "Merienda", calorias: "300 kcal" }
-    ];
-
-    let tabla = document.getElementById("tablaAlimentacion");
-    if (!tabla) return;
-
-    comidas.forEach(c => {
-        let fila = document.createElement("tr");
-        fila.innerHTML = `
-        <td>${c.dia}</td>
-        <td>${c.comida}</td>
-        <td>${c.tipo}</td>
-        <td>${c.calorias}</td>
-      `;
+      <td>${r.dia}</td>
+      <td><i class="fas ${icono} text-warning me-2"></i>${r.rutina}</td>
+      <td>${r.objetivo}</td>
+      <td>${r.duracion}</td>
+    `;
         tabla.appendChild(fila);
     });
 }
 
 function descargarPDFalimentacion() {
-    let btnDescargar = document.getElementById("btnDescargarPDF");
-    let modal = new bootstrap.Modal(document.getElementById("modalDescargaPDF"));
+    let btnDescargar = document.getElementById("btnAlimentacion");
+    let modal = new bootstrap.Modal(document.getElementById("modalDescargandoPDF"));
 
     btnDescargar.addEventListener("click", () => {
         modal.show();

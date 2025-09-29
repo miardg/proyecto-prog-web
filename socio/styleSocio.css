@@ -45,50 +45,57 @@ body {
     color: var(--primary-yellow) !important;
 }
 
-/* === Panel del Socio === */
+.navbar .btn-warning {
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+}
+
+/* === Panel del Socio (versión clara) === */
 #panel-socio {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-    background-color: var(--dark-gray);
-    color: var(--white);
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
 }
 
 #panel-socio h2 {
     font-size: 2.8rem;
-    color: var(--primary-yellow);
+    font-weight: 800;
+    color: var(--dark-gray);
     margin-bottom: 3rem;
+    text-align: center;
 }
 
 #panel-socio h3 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: var(--primary-yellow);
     margin-bottom: 2rem;
 }
 
-/* === Cards === */
+/* === Cards claras === */
 .card-socio {
-    background-color: var(--primary-black);
+    background-color: var(--white);
     border: none;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    border-radius: 1rem;
+    box-shadow: var(--sombra-card);
+    border-radius: 0.75rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     padding: 2rem 1.5rem;
 }
 
 .card-socio:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 .card-socio .card-title {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: var(--primary-yellow);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .card-socio .card-text {
-    font-size: 1.05rem;
-    color: var(--light-gray);
+    font-size: 1rem;
+    color: var(--medium-gray);
 }
 
 .card-socio i {
@@ -99,16 +106,53 @@ body {
     transform: scale(1.1);
 }
 
+.card-socio p {
+    font-size: 1.2rem;
+}
+
+.card-socio span.text-warning,
+.card-socio span.text-success {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* === Tabla y modal de Beneficios === */
+
+#tablaBeneficios td {
+    font-size: 1.1rem;
+}
+
+#modalBeneficioBody p {
+    font-size: 1.2rem;
+}
+
+#modalBeneficioBody strong {
+    font-size: 1.3rem;
+    color: var(--primary-yellow);
+}
+
+/* === Tabla de Rutinas === */
+
+#tablaRutinas td {
+    font-size: 1.1rem;
+}
+
 /* === Botones === */
 #panel-socio .btn {
     font-size: 1rem;
     padding: 0.7rem 1.2rem;
     font-weight: 600;
+    text-align: center;
+    background-color: var(--primary-yellow);
+    color: var(--dark-gray);
+    border: none;
+    border-radius: 0.5rem;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #panel-socio .btn:hover {
     background-color: var(--dark-yellow);
+    color: var(--dark-gray);
     transform: scale(1.05);
 }
 
