@@ -24,7 +24,7 @@ function obtenerClases() {
 
 function obtenerPlanSocio() {
     return {
-        nombre: "Básico",
+        nombre: "Premium",
         estado: "Activo",
         clasesParticularesRestantes: Infinity
     };

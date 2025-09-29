@@ -11,17 +11,17 @@
     <script src="./scriptSocio.js"></script>
 </head>
 
-<body>
-    <header class="bg-dark text-white text-center py-4">
-        <h1>Mis Clases</h1>
-        <p>Consultá tus clases activas y reservá nuevas</p>
+<body class="bg-dark text-white">
+    <header class="text-center py-5">
+        <h1 class="display-5 text-warning">Mis Clases</h1>
+        <p class="lead text-light">Consultá tus clases activas y reservá nuevas</p>
     </header>
 
     <main class="container py-5">
         <!-- Resumen del plan -->
         <section class="mb-5">
-            <h3>Resumen de Plan</h3>
-            <div class="card">
+            <h3 class="text-warning mb-3">Resumen de Plan</h3>
+            <div class="card card-socio">
                 <div class="card-body">
                     <p><strong>Plan:</strong> Premium</p>
                     <p><strong>Estado:</strong> Activo</p>
@@ -32,31 +32,13 @@
 
         <!-- Clases disponibles -->
         <section>
-            <h3>Clases Disponibles</h3>
+            <h3 class="text-warning mb-3">Clases Disponibles</h3>
             <div class="row g-4" id="clasesDisponibles">
-                <!-- JS inserta datos -->
+                <!-- JS inserta cards con clase card-socio -->
             </div>
         </section>
     </main>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalClase" tabindex="-1" aria-labelledby="modalClaseLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalClaseLabel">Confirmar inscripción</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body" id="modalClaseBody">
-                    <!-- JS inserta datos -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="confirmarClase">Confirmar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <footer class="bg-dark text-white py-5 mt-5">
         <div class="container text-center">
