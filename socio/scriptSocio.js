@@ -223,11 +223,11 @@ function inicializarRedirecciones() {
         }
     };
 
-    asignarRedireccion("btnClases", "clasesSocio.html");
-    asignarRedireccion("btnPlan", "planSocio.html");
-    asignarRedireccion("btnBeneficios", "beneficiosSocio.html");
-    asignarRedireccion("btnRutinas", "rutinaSocio.html");
-    asignarRedireccion("btnPersonalTrainer", "personalTrainerSocio.html");
+    asignarRedireccion("btnClases", "clasesSocio.php");
+    asignarRedireccion("btnPlan", "planSocio.php");
+    asignarRedireccion("btnBeneficios", "beneficiosSocio.php");
+    asignarRedireccion("btnRutinas", "rutinaSocio.php");
+    asignarRedireccion("btnPersonalTrainer", "personalTrainerSocio.php");
 }
 
 function canjearBeneficio(beneficio, lista) {

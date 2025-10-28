@@ -2,34 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KYNETIK GYM</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styleSocio.css" />
-    <script src="./scriptSocio.js"></script>
+    <?php require_once("./include-socio/head.php"); ?>
 </head>
 
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">
-                <i class="fas fa-dumbbell text-warning me-2"></i>KynetikGym
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-warning" id="btnLogout">Cerrar Sesión</button>
-            </div>
-        </div>
-    </nav>
+    <?php require_once("./include-socio/navbar.php"); ?>
 
     <header class="text-center py-5 bg-light border-bottom">
         <h1 class="display-5 fw-bold text-dark">Plan del Socio</h1>
@@ -80,11 +59,9 @@
         </section>
     </main>
 
-    <footer class="bg-dark text-white py-5 mt-5">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2025 KynetikGym. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+    <!--Footer-->
+    <?php require_once("./include-socio/footer.php"); ?>
+
 </body>
 
 </html>
