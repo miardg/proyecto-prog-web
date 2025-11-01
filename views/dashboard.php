@@ -4,7 +4,6 @@ require_once __DIR__ . '/../auth.php';
 
 require_login();
 
-$rol = $_SESSION['user']['rol'];
 $nombre = $_SESSION['user']['name'];
 ?>
 <!DOCTYPE html>
@@ -21,28 +20,30 @@ $nombre = $_SESSION['user']['name'];
 
 <body>
     <div class="container mt-5">
-        <h1>bienvenido <?php echo htmlspecialchars($nombre); ?></h1>
-        <p>tu rol es: <?php echo htmlspecialchars($rol); ?></p>
 
         <?php
-        // segun el rol se incluye el partial correspondiente
-        switch ($rol) {
-            case 'Administrador':
-                include __DIR__ . '/partials/menu_admin.php';
-                break;
-            case 'Recepcionista':
-                include __DIR__ . '/partials/menu_recepcionista.php';
-                break;
-            case 'Profesor':
-                include __DIR__ . '/partials/menu_profesor.php';
-                break;
-            case 'Socio':
-                include __DIR__ . '/partials/menu_socio.php';
-                break;
-            default:
-                echo "<p>no hay contenido definido para este rol</p>";
-        }
+        require_once __DIR__ . '/../config.php';
+        require_once __DIR__ . '/../auth.php';
+        require_once __DIR__ . '/../permisos.php';
+
+        require_login();
+
+        $idUsuario = $_SESSION['user']['id'];
+        $nombre = $_SESSION['user']['name'];
         ?>
+        <h1>bienvenido <?php echo htmlspecialchars($nombre); ?></h1>
+
+        <?php if (Permisos::esRol('Administrador', $idUsuario)): ?>
+            <?php include __DIR__ . '/partials/menu_admin.php'; ?>
+        <?php elseif (Permisos::esRol('Profesor', $idUsuario)): ?>
+            <?php include __DIR__ . '/partials/menu_profesor.php'; ?>
+        <?php elseif (Permisos::esRol('Recepcionista', $idUsuario)): ?>
+            <?php include __DIR__ . '/partials/menu_recepcionista.php'; ?>
+        <?php elseif (Permisos::esRol('Socio', $idUsuario)): ?>
+            <?php include __DIR__ . '/partials/menu_socio.php'; ?>
+        <?php else: ?>
+            <p>no hay contenido definido para este rol</p>
+        <?php endif; ?>
     </div>
 
 </body>

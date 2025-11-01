@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'id'    => (int)$user['id_usuario'],
                 'name'  => $user['nombre'] . ' ' . $user['apellido'],
                 'email' => $user['email'],
-                'rol'   => $user['rol'],
             ];
             header("Location: views/dashboard.php");
             exit;
