@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Kynetik</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+
+    <!-- Scripts JS con defer -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+</head>
+
+<body>
+    <div class="auth-container d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="auth-card">
+                        <div class="row g-0">
+                            <!-- Lado izquierdo: imagen/icono y texto -->
+                            <div
+                                class="col-md-6 d-flex align-items-center justify-content-center bg-dark text-white p-5">
+                                <div class="text-center">
+                                    <i class="fas fa-dumbbell display-3 text-warning mb-4"></i>
+                                    <h3 class="fw-bold mb-3">¡Únete a KynetikGym!</h3>
+                                    <p class="text-muted">Comienza tu transformación hoy mismo</p>
+                                </div>
+                            </div>
+
+                            <!-- Lado derecho: formulario -->
+                            <div class="col-md-6 p-5">
+                                <div class="text-center mb-4">
+                                    <h2 class="fw-bold">Crear Cuenta</h2>
+                                    <p class="text-muted">Completa tus datos para registrarte</p>
+                                </div>
+
+                                <!-- FORM REGISTRO (se puede poner novalidate para probar el js) -->
+                                <form id="registroForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="nombre" class="form-label">Nombre</label>
+                                            <input type="text" class="form-control" id="nombre" required>
+                                            <div class="invalid-feedback">Por favor ingrese su nombre.</div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="apellido" class="form-label">Apellido</label>
+                                            <input type="text" class="form-control" id="apellido" required>
+                                            <div class="invalid-feedback">Por favor ingrese su apellido.</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="dni" class="form-label">DNI</label>
+                                        <input type="number" class="form-control" id="dni" required>
+                                        <div class="invalid-feedback">Ingrese un DNI válido (7 a 8 dígitos).</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                        <div class="invalid-feedback">Ingrese un correo válido.</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="telefono" class="form-label">Teléfono</label>
+                                        <input type="tel" class="form-control" id="telefono" required>
+                                        <div class="invalid-feedback">Ingrese un teléfono válido.</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="password" required>
+                                        <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                                        <input type="password" class="form-control" id="confirmPassword" required>
+                                        <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+                                    </div>
+
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="terminos" required>
+                                        <label class="form-check-label" for="terminos">
+                                            Acepto los <a href="#" class="text-warning">términos y condiciones</a>
+                                        </label>
+                                        <div class="invalid-feedback">Debe aceptar los términos y condiciones.</div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-warning w-100 mb-3">
+                                        <span class="btn-text">Registrarse</span>
+                                        <span class="loading d-none"></span>
+                                    </button>
+                                </form>
+
+                                <div class="text-center">
+                                    <p class="mb-0">¿Ya tienes cuenta? <a href="login.php" class="text-warning">Iniciar
+                                            Sesión</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE FEEDBACK -->
+    <div class="modal fade" id="modalFeedback" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="modal-title" class="modal-title">Título</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    Mensaje del sistema
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnClose" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
