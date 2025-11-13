@@ -7,7 +7,7 @@ class ConexionDb {
             $host = "localhost";
             $dbname = "kynetik";
             $user = "root";
-            $pass = "";
+            $pass = "root";
 
             try {
                 self::$conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
