@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../auth.php';
-
+require_once __DIR__ . '/../permisos.php';
 require_login();
 
 $nombre = $_SESSION['user']['name'];
@@ -22,11 +22,6 @@ $nombre = $_SESSION['user']['name'];
     <div class="container mt-5">
 
         <?php
-        require_once __DIR__ . '/../config.php';
-        require_once __DIR__ . '/../auth.php';
-        require_once __DIR__ . '/../permisos.php';
-
-        require_login();
 
         $idUsuario = $_SESSION['user']['id'];
         $nombre = $_SESSION['user']['name'];
