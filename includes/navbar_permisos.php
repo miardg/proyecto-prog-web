@@ -3,14 +3,14 @@ require_once __DIR__ . '/../permisos.php';
 
 $idUsuario = $_SESSION['user']['id'] ?? null;
 
-// helper para no repetir
+//funcion para no repetir toda la sentencia para consultar los permisos
 function can(string $permiso, ?int $idUsuario): bool {
   return $idUsuario && Permisos::tienePermiso($permiso, $idUsuario);
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.php">
+        <a class="navbar-brand fw-bold" href="/proyecto-prog-web/views/dashboard.php">
             <i class="fas fa-dumbbell text-warning me-2"></i>KynetikGym
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -22,7 +22,7 @@ function can(string $permiso, ?int $idUsuario): bool {
                 <!-- Inicio siempre visible en privadas -->
                 <li class="nav-item">
                     <a class="nav-link <?= ($currentPage ?? '') === 'index' ? 'active' : '' ?>"
-                        href="index.php">Inicio</a>
+                        href="/proyecto-prog-web/views/dashboard.php">Inicio</a>
                 </li>
 
                 <!-- Clases -->
