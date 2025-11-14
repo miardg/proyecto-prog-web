@@ -31,8 +31,13 @@ $nombre = $_SESSION['user']['name'];
         $idUsuario = $_SESSION['user']['id'];
         $nombre = $_SESSION['user']['name'];
         ?>
+        <!-- Este es el include de la navbar que determina que mostrar segun los permisos -->
+        <?php include __DIR__ . '/../includes/navbar_permisos.php'; ?>
+
+
         <h1>bienvenido <?php echo htmlspecialchars($nombre); ?></h1>
 
+        <!-- quiza habria que quitar esto y dejar un simple "saludo" al usuario manejandonos unicamente por la nav bar -->
         <?php if (Permisos::esRol('Administrador', $idUsuario)): ?>
             <?php include __DIR__ . '/partials/menu_admin.php'; ?>
         <?php elseif (Permisos::esRol('Profesor', $idUsuario)): ?>
