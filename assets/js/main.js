@@ -88,7 +88,7 @@ window.onload = function () {
     if (formRegistro) {
         let nombre = document.getElementById("nombre");
         let apellido = document.getElementById("apellido");
-        let dni = document.getElementById("dni"); // 👈 nuevo campo
+        let dni = document.getElementById("dni");
         let emailRegistro = document.getElementById("email");
         let telefono = document.getElementById("telefono");
         let pass1 = document.getElementById("password");
@@ -96,7 +96,6 @@ window.onload = function () {
         let terminos = document.getElementById("terminos");
 
         formRegistro.addEventListener("submit", function (e) {
-            e.preventDefault();
             let valido = true;
             let formatoMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             let formatoTelefono = /^[0-9\-]+$/;
@@ -167,13 +166,8 @@ window.onload = function () {
                 terminos.classList.add("is-valid");
             }
 
-            if (valido) {
-                mostrarModal("Éxito", "Registro enviado. Un administrativo confirmará su alta.");
-                btnClose.addEventListener("click", function () {
-                    window.location.href = "login.html";
-                });
-                formRegistro.reset();
-            } else {
+            if (!valido){
+                e.preventDefault();
                 mostrarModal("Error", "Complete correctamente el formulario de registro.");
             }
         });
