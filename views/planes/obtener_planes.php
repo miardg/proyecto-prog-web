@@ -15,3 +15,4 @@ try {
 } catch (Exception $e) {
     echo json_encode(["error" => "Error al obtener planes", "detalle" => $e->getMessage()]);
 }
+?>

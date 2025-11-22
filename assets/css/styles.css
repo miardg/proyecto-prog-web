@@ -1,4 +1,3 @@
-
 :root {
   --primary-yellow: #ffc107;
   --dark-yellow: #e0a800;
@@ -50,10 +49,12 @@ body {
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
@@ -199,13 +200,21 @@ html {
 }
 
 .titulo-panel {
-  color: var(--primary-yellow); /* si ya definiste el color institucional */
+  color: var(--primary-yellow);
+  /* si ya definiste el color institucional */
   font-weight: 700;
   font-size: 2rem;
   text-align: center;
   margin-bottom: 1.5rem;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   letter-spacing: 0.5px;
+}
+
+.text-frecuencia {
+
+    color: red;
+
+
 }
 
 @keyframes spin {

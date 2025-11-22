@@ -10,6 +10,7 @@
     <link href="assets/css/styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/planes.js" defer></script>
 </head>
 
 <body>
@@ -33,85 +34,13 @@
     </section>
 
     <!-- Plans Section -->
-    <section class="py-5">
+    <section class="py-5 bg-light">
         <div class="container">
-            <div class="row g-4">
-                <!-- Plan Básico -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 shadow">
-                        <div class="card-header bg-light text-center py-4">
-                            <h4 class="fw-bold">Plan Básico</h4>
-                            <div class="display-4 fw-bold text-warning">$15.000</div>
-                            <small class="text-muted">por mes</small>
-                        </div>
-                        <div class="card-body p-4">
-                            <ul class="list-unstyled mb-0">
-                                <li><i class="fas fa-check text-success me-2"></i>Acceso completo al gimnasio</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Uso de todos los equipos</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Vestuarios y duchas</li>
-                                <li><i class="fas fa-times text-muted me-2"></i>Clases grupales</li>
-                                <li><i class="fas fa-times text-muted me-2"></i>Entrenamiento personal</li>
-                                <li><i class="fas fa-times text-muted me-2"></i>Consulta nutricional</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer bg-transparent p-4">
-                            <button class="btn btn-outline-warning w-100" data-plan="Básico">Elegir Plan</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Plan Completo -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 shadow plan-featured">
-                        <div class="card-header bg-warning text-center py-4">
-                            <h4 class="fw-bold">Plan Completo</h4>
-                            <div class="display-4 fw-bold text-dark">$25.000</div>
-                            <small class="text-dark">por mes</small>
-                        </div>
-                        <div class="card-body p-4">
-                            <ul class="list-unstyled mb-0">
-                                <li><i class="fas fa-check text-success me-2"></i>Acceso completo al gimnasio</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Uso de todos los equipos</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Vestuarios y duchas</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Clases grupales ilimitadas</li>
-                                <li><i class="fas fa-check text-success me-2"></i>2 sesiones de entrenamiento personal
-                                </li>
-                                <li><i class="fas fa-times text-muted me-2"></i>Consulta nutricional</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer bg-transparent p-4">
-                            <button class="btn btn-warning w-100" data-plan="Completo">Elegir Plan</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Plan Premium -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 shadow">
-                        <div class="card-header bg-dark text-white text-center py-4">
-                            <h4 class="fw-bold">Plan Premium</h4>
-                            <div class="display-4 fw-bold text-warning">$35.000</div>
-                            <small class="text-light">por mes</small>
-                        </div>
-                        <div class="card-body p-4">
-                            <ul class="list-unstyled mb-0">
-                                <li><i class="fas fa-check text-success me-2"></i>Acceso completo al gimnasio</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Uso de todos los equipos</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Vestuarios y duchas</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Clases grupales ilimitadas</li>
-                                <li><i class="fas fa-check text-success me-2"></i>4 sesiones de entrenamiento personal
-                                </li>
-                                <li><i class="fas fa-check text-success me-2"></i>Consulta nutricional mensual</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer bg-transparent p-4">
-                            <button class="btn btn-dark w-100" data-plan="Premium">Elegir Plan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h2 class="text-center mb-5">Nuestros Planes</h2>
+            <div id="planesLanding" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></div>
         </div>
     </section>
+
 
     <!-- FAQ Section -->
     <section class="py-5 bg-light">
