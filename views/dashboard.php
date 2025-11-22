@@ -29,9 +29,6 @@ $nombre = $_SESSION['user']['name'];
         <!-- Este es el include de la navbar que determina que mostrar segun los permisos -->
         <?php include __DIR__ . '/../includes/navbar_permisos.php'; ?>
 
-
-        <h1>bienvenido <?php echo htmlspecialchars($nombre); ?></h1>
-
         <!-- quiza habria que quitar esto y dejar un simple "saludo" al usuario manejandonos unicamente por la nav bar -->
         <?php if (Permisos::esRol('Administrador', $idUsuario)): ?>
             <?php include __DIR__ . '/partials/menu_admin.php'; ?>
@@ -40,7 +37,8 @@ $nombre = $_SESSION['user']['name'];
         <?php elseif (Permisos::esRol('Recepcionista', $idUsuario)): ?>
             <?php include __DIR__ . '/partials/menu_recepcionista.php'; ?>
         <?php elseif (Permisos::esRol('Socio', $idUsuario)): ?>
-            <?php include __DIR__ . '/partials/menu_socio.php'; ?>
+            <?php include __DIR__ . '/partials/menu_socio.html'; ?>
+            <script src="../assets/js/socio.js" defer></script>
         <?php else: ?>
             <p>no hay contenido definido para este rol</p>
         <?php endif; ?>

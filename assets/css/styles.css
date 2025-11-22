@@ -198,6 +198,16 @@ html {
   animation: spin 1s ease-in-out infinite;
 }
 
+.titulo-panel {
+  color: var(--primary-yellow); /* si ya definiste el color institucional */
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  letter-spacing: 0.5px;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
