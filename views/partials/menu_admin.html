@@ -1,0 +1,63 @@
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card shadow-lg p-4" style="max-width: 900px; width: 100%;">
+        <div class="card-body">
+            <h2 class="titulo-panel mb-4 text-center">Panel del Administrador</h2>
+
+            <!-- Datos personales -->
+            <div id="cardDatosAdmin" class="mb-4"></div>
+
+            <!-- Estadísticas -->
+            <h4 class="text-center mb-4">Estadísticas del sistema</h4>
+            <div class="row text-center mb-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Usuarios registrados</h6>
+                        <div class="display-6 fw-bold text-warning" id="totalUsuarios">–</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Clases creadas</h6>
+                        <div class="display-6 fw-bold text-warning" id="totalClases">–</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Planes disponibles</h6>
+                        <div class="display-6 fw-bold text-warning" id="totalPlanes">–</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Últimos registros -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Último usuario registrado</h6>
+                        <p class="mb-1"><strong>Nombre:</strong> <span id="ultimoUsuarioNombre">–</span></p>
+                        <p class="mb-1"><strong>Email:</strong> <span id="ultimoUsuarioEmail">–</span></p>
+                        <p class="mb-0"><strong>Fecha:</strong> <span id="ultimoUsuarioFecha">–</span></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Última clase creada</h6>
+                        <p class="mb-1"><strong>Nombre:</strong> <span id="ultimaClaseNombre">–</span></p>
+                        <p class="mb-1"><strong>Día:</strong> <span id="ultimaClaseDia">–</span></p>
+                        <p class="mb-0"><strong>Profesor:</strong> <span id="ultimaClaseProfesor">–</span></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Último plan creado</h6>
+                        <p class="mb-1"><strong>Nombre:</strong> <span id="ultimoPlanNombre">–</span></p>
+                        <p class="mb-1"><strong>Precio:</strong> <span id="ultimoPlanPrecio">–</span></p>
+                        <p class="mb-0"><strong>Frecuencia:</strong> <span id="ultimoPlanFrecuencia">–</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-muted text-center mt-4">Usá la barra de navegación para gestionar el sistema.</p>
+        </div>
+    </div>
+</div>
