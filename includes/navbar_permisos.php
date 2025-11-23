@@ -143,7 +143,7 @@ function can(string $permiso, ?int $idUsuario): bool
                             Socios
                         </a>
                         <ul class="dropdown-menu">
-                            <?php if (can('Asignar plan a socio', $idUsuario)): ?>
+                            <?php if (can('Asignar plan a socio', $idUsuario) || can('Aprobar nuevos socios', $idUsuario)): ?>
                                 <li><a class="dropdown-item"
                                         href="/proyecto-prog-web/views/socios/socios_pendientes.php">Aprobar nuevos socios</a>
                                 </li>
