@@ -35,7 +35,7 @@ $nombre = $_SESSION['user']['name'];
         <?php elseif (Permisos::esRol('Profesor', $idUsuario)): ?>
             <?php include __DIR__ . '/partials/menu_profesor.php'; ?>
         <?php elseif (Permisos::esRol('Recepcionista', $idUsuario)): ?>
-            <?php include __DIR__ . '/partials/menu_recepcionista.php'; ?>
+            <?php include __DIR__ . '/partials/menu_recepcionista.html'; ?>
         <?php elseif (Permisos::esRol('Socio', $idUsuario)): ?>
             <?php include __DIR__ . '/partials/menu_socio.html'; ?>
             <script src="../assets/js/socio.js" defer></script>

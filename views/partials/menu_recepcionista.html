@@ -1,0 +1,63 @@
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card shadow-lg p-4" style="max-width: 900px; width: 100%;">
+        <div class="card-body">
+            <h2 class="titulo-panel mb-4 text-center">Panel del Recepcionista</h2>
+
+            <!-- Datos personales -->
+            <div id="cardDatosRecepcionista" class="mb-4"></div>
+
+            <!-- Estadísticas -->
+            <h4 class="text-center mb-4">Estadísticas del sistema</h4>
+            <div class="row text-center mb-4">
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Socios activos</h6>
+                        <div class="display-6 fw-bold text-warning" id="totalSociosActivos">–</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Pendientes de aprobación</h6>
+                        <div class="display-6 fw-bold text-warning" id="totalSociosPendientes">–</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Pagos este mes</h6>
+                        <div class="display-6 fw-bold text-warning" id="totalPagosMes">–</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Deudas pendientes</h6>
+                        <div class="display-6 fw-bold text-warning" id="totalDeudas">–</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Últimos registros -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Último socio aprobado</h6>
+                        <p class="mb-1"><strong>Nombre:</strong> <span id="ultimoSocioNombre">–</span></p>
+                        <p class="mb-1"><strong>Email:</strong> <span id="ultimoSocioEmail">–</span></p>
+                        <p class="mb-0"><strong>Fecha:</strong> <span id="ultimoSocioFecha">–</span></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm p-3">
+                        <h6 class="text-muted">Último pago registrado</h6>
+                        <p class="mb-1"><strong>Socio:</strong> <span id="ultimoPagoSocio">–</span></p>
+                        <p class="mb-1"><strong>Monto:</strong> <span id="ultimoPagoMonto">–</span></p>
+                        <p class="mb-0"><strong>Fecha:</strong> <span id="ultimoPagoFecha">–</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-muted text-center mt-4">Usá la barra de navegación para gestionar socios y pagos.</p>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/recepcionista.js" defer></script>
