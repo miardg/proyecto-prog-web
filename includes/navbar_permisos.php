@@ -95,10 +95,6 @@ function can(string $permiso, ?int $idUsuario): bool
                                 <li><a class="dropdown-item" href="/proyecto-prog-web/views/planes/mi_plan_actual.php">Mi plan
                                         actual</a></li>
                             <?php endif; ?>
-
-                            <?php if (can('Modificar planes', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="planes_gestion.php">Gestionar/Modificar planes</a></li>
-                            <?php endif; ?>
                         </ul>
                     </li>
                 <?php endif; ?>
