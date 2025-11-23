@@ -32,6 +32,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     refrescar();
   }
+
+  if (document.getElementById("formModificarClase")) {
+    const form = document.getElementById("formModificarClase");
+    form.addEventListener("submit", enviarClaseModificada);
+
+    const refrescar = () => actualizarHorariosDisponibles("formModificarClase", "btnModificarClase");
+
+    const diaEl = form.querySelector('[name="dia_semana"]');
+    const lugarEl = form.querySelector('[name="lugar"]');
+    const durEl = form.querySelector('[name="duracion_min"]');
+
+    if (diaEl) diaEl.addEventListener('change', refrescar);
+    if (lugarEl) lugarEl.addEventListener('change', refrescar);
+    if (durEl) durEl.addEventListener('input', refrescar);
+
+    refrescar();
+  }
 });
 
 // Utilidades de tiempo
@@ -49,8 +66,8 @@ function solapa(rIni, rFin, oIni, oFin) {
 }
 
 // ==================== CREAR CLASE ====================
-async function actualizarHorariosDisponibles() {
-  const form = document.getElementById("crearClaseForm");
+async function actualizarHorariosDisponibles(formId = "crearClaseForm", botonId = "btnCrearClase") {
+  const form = document.getElementById(formId);
   if (!form) return;
 
   const dia = form.querySelector('[name="dia_semana"]')?.value || "";
@@ -118,9 +135,9 @@ async function actualizarHorariosDisponibles() {
 
   selectHora.disabled = opcionesGeneradas === 0;
 
-  const btnCrear = document.getElementById("btnCrearClase");
-  if (btnCrear) {
-    btnCrear.disabled = opcionesGeneradas === 0;
+  const btn = document.getElementById(botonId);
+  if (btn) {
+    btn.disabled = opcionesGeneradas === 0;
   }
 }
 
@@ -249,7 +266,7 @@ async function cargarClasesDisponibles() {
           const btnModificar = document.createElement("button");
           btnModificar.className = "btn btn-warning btn-sm";
           btnModificar.textContent = "Modificar";
-          btnModificar.addEventListener("click", () => modificarClase(c.id_clase));
+          btnModificar.addEventListener("click", () => modificarClase(c));
           tdAcciones.appendChild(btnModificar);
         }
 
@@ -310,10 +327,50 @@ async function cancelarInscripcion(idClase) {
 }
 
 
-function modificarClase(idClase) {
-  //a añadir
-  // Placeholder: abrí modal o redirigí a edición
-  alert("Modificar clase (pendiente) ID: " + idClase);
+function modificarClase(c) {
+  document.getElementById("mod-id-clase").value = c.id_clase;
+  document.getElementById("mod-nombre").value = c.nombre_clase;
+  document.getElementById("mod-actividad").value = c.tipo_actividad;
+  document.getElementById("mod-dia").value = c.dia_semana;
+  document.getElementById("mod-duracion").value = c.duracion_min;
+  document.getElementById("mod-lugar").value = c.lugar;
+  document.getElementById("mod-cupo").value = c.cupo_maximo;
+
+  // Usamos la función de profesor.js
+  cargarProfesores("mod-profesor", c.profesor_id);
+
+  // Refrescar horarios disponibles en el modal
+  actualizarHorariosDisponibles("formModificarClase", "btnModificarClase");
+
+  const modal = new bootstrap.Modal(document.getElementById("modalModificarClase"));
+  modal.show();
+}
+
+
+
+async function enviarClaseModificada(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
+
+  try {
+    const resp = await fetch("procesar_modificar_clase.php", {
+      method: "POST",
+      body: formData
+    });
+    const data = await resp.json();
+
+    if (data.success) {
+      bootstrap.Modal.getInstance(form.closest(".modal")).hide();
+      cargarClasesDisponibles(); // recarga la tabla
+    } else {
+      alert(data.message || "No se pudo modificar la clase.");
+    }
+  } catch (err) {
+    console.error("Error al modificar clase", err);
+    alert("Error de conexión con el servidor.");
+  }
 }
 
 function EliminarClase(idClase) {

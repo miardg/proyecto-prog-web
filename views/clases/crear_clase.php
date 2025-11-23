@@ -18,10 +18,13 @@ require_login();
 </head>
 
 <body>
+    <div>
+        <?php include __DIR__ . '/../../includes/navbar_permisos.php'; ?>
+    </div>
     <div class="auth-container d-flex align-items-center">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-8 col-xl-6">
+                <div class="col-md-6 p-5 mt-5">
                     <div class="auth-card">
                         <div class="row g-0">
                             <!-- Lado izquierdo -->
@@ -132,7 +135,8 @@ require_login();
                                         <div class="invalid-feedback">Cupo entre 1 y 100.</div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-warning w-100 mb-3" id="btnCrearClase">Crear Clase</button>
+                                    <button type="submit" class="btn btn-warning w-100 mb-3" id="btnCrearClase">Crear
+                                        Clase</button>
                                 </form>
                             </div>
                         </div>

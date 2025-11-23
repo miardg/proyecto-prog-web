@@ -30,36 +30,38 @@ try {
     error_log("Usuario $idUsuario es socio con ID $idSocio");
 
     $sql = "
-        SELECT c.id_clase, c.nombre_clase, c.tipo_actividad, c.dia_semana, c.hora_inicio,
-               c.duracion_min, c.lugar, c.cupo_maximo, c.estado,
-               IFNULL(CONCAT(u.nombre, ' ', u.apellido), 'Sin asignar') AS profesor
-        FROM clase c
-        LEFT JOIN inscripcionclase i
-          ON i.id_clase = c.id_clase AND i.id_socio = :socio
-        LEFT JOIN usuario u
-          ON u.id_usuario = c.profesor_id
-        WHERE c.estado = 'activa'
-          AND i.id_clase IS NULL
-        ORDER BY FIELD(c.dia_semana,
-                       'Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'),
-                 c.hora_inicio
-    ";
+    SELECT c.id_clase, c.nombre_clase, c.tipo_actividad, c.dia_semana, c.hora_inicio,
+           c.duracion_min, c.lugar, c.cupo_maximo, c.estado,
+           c.profesor_id,
+           IFNULL(CONCAT(u.nombre, ' ', u.apellido), 'Sin asignar') AS profesor
+    FROM clase c
+    LEFT JOIN inscripcionclase i
+      ON i.id_clase = c.id_clase AND i.id_socio = :socio
+    LEFT JOIN usuario u
+      ON u.id_usuario = c.profesor_id
+    WHERE c.estado = 'activa'
+      AND i.id_clase IS NULL
+    ORDER BY FIELD(c.dia_semana,
+                   'Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'),
+             c.hora_inicio
+";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':socio', $idSocio, PDO::PARAM_INT);
   } else {
     error_log("Usuario $idUsuario no es socio");
     $sql = "
-        SELECT c.id_clase, c.nombre_clase, c.tipo_actividad, c.dia_semana, c.hora_inicio,
-               c.duracion_min, c.lugar, c.cupo_maximo, c.estado,
-               IFNULL(CONCAT(u.nombre, ' ', u.apellido), 'Sin asignar') AS profesor
-        FROM clase c
-        LEFT JOIN usuario u
-          ON u.id_usuario = c.profesor_id
-        WHERE c.estado = 'activa'
-        ORDER BY FIELD(c.dia_semana,
-                       'Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'),
-                 c.hora_inicio
-    ";
+    SELECT c.id_clase, c.nombre_clase, c.tipo_actividad, c.dia_semana, c.hora_inicio,
+           c.duracion_min, c.lugar, c.cupo_maximo, c.estado,
+           c.profesor_id,
+           IFNULL(CONCAT(u.nombre, ' ', u.apellido), 'Sin asignar') AS profesor
+    FROM clase c
+    LEFT JOIN usuario u
+      ON u.id_usuario = c.profesor_id
+    WHERE c.estado = 'activa'
+    ORDER BY FIELD(c.dia_semana,
+                   'Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'),
+             c.hora_inicio
+";
     $stmt = $conn->prepare($sql);
   }
 
