@@ -1,3 +1,4 @@
+// Horarios del gimnasio
 const horariosGimnasio = {
   "Lunes": { inicio: "06:00", fin: "23:00" },
   "Martes": { inicio: "06:00", fin: "23:00" },
@@ -9,7 +10,10 @@ const horariosGimnasio = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("listaClases")) {
+  if (document.getElementById("verMisClases")) {
+    cargarMisClases();
+  }
+  if (document.getElementById("verTodasLasClases")) {
     cargarClasesDisponibles();
   }
   if (document.getElementById("crearClaseForm")) {
@@ -30,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Utilidades de tiempo
 function parseTime(hhmm) {
   const [h, m] = hhmm.split(":").map(Number);
   return h * 3600 + m * 60;
@@ -43,7 +48,7 @@ function solapa(rIni, rFin, oIni, oFin) {
   return rIni < oFin && rFin > oIni;
 }
 
-// Llena el select [name="hora_inicio"] con intervalos de 15 min
+// ==================== CREAR CLASE ====================
 async function actualizarHorariosDisponibles() {
   const form = document.getElementById("crearClaseForm");
   if (!form) return;
@@ -66,7 +71,6 @@ async function actualizarHorariosDisponibles() {
     return;
   }
 
-  // Obtener ocupados del backend
   let ocupados = [];
   try {
     const resp = await fetch(`obtener_horarios_ocupados.php?dia=${encodeURIComponent(dia)}&lugar=${encodeURIComponent(lugar)}`);
@@ -125,9 +129,8 @@ function crearClase() {
   if (!form) return;
 
   form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // evita que el navegador vaya a procesar_crear_clase.php
+    e.preventDefault();
 
-    // limpiar estados previos
     form.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
     form.querySelectorAll(".alert").forEach(el => el.remove());
 
@@ -174,8 +177,9 @@ function crearClase() {
   });
 }
 
+// ==================== VER CLASES (VISTA SOCIO / ADMIN) ====================
 async function cargarClasesDisponibles() {
-  const contenedor = document.getElementById("listaClases");
+  const contenedor = document.getElementById("verTodasLasClases");
   contenedor.innerHTML = "<p>Cargando clases...</p>";
 
   try {
@@ -194,41 +198,68 @@ async function cargarClasesDisponibles() {
     const tabla = document.createElement("table");
     tabla.className = "table table-bordered table-hover";
 
-    tabla.innerHTML = `
-      <thead class="table-dark">
-        <tr>
-          <th>Nombre</th>
-          <th>Actividad</th>
-          <th>Día</th>
-          <th>Hora</th>
-          <th>Duración</th>
-          <th>Lugar</th>
-          <th>Profesor</th>
-          <th>Cupo</th>
-          <th>Estado</th>
-          ${(esSocio || puedeModificar) ? "<th>Acciones</th>" : ""}
-        </tr>
-      </thead>
-      <tbody>
-        ${clases.map(c => `
-          <tr>
-            <td>${c.nombre_clase}</td>
-            <td>${c.tipo_actividad}</td>
-            <td>${c.dia_semana}</td>
-            <td>${(c.hora_inicio || '').slice(0, 5)}</td>
-            <td>${c.duracion_min} min</td>
-            <td>${c.lugar}</td>
-            <td>${c.profesor ?? 'Sin asignar'}</td>
-            <td>${c.cupo_maximo}</td>
-            <td>${c.estado}</td>
-            ${(esSocio)
-        ? `<td><button class="btn btn-success btn-sm" onclick="anotarseClase(${c.id_clase})">Anotarse</button></td>`
-        : (puedeModificar ? `<td><button class="btn btn-warning btn-sm" onclick="modificarClase(${c.id_clase})">Modificar</button></td>` : "")
-      }
-          </tr>
-        `).join("")}
-      </tbody>
+    // Cabecera
+    const thead = document.createElement("thead");
+    thead.className = "table-dark";
+    thead.innerHTML = `
+      <tr>
+        <th>Nombre</th>
+        <th>Actividad</th>
+        <th>Día</th>
+        <th>Hora</th>
+        <th>Duración</th>
+        <th>Lugar</th>
+        <th>Profesor</th>
+        <th>Cupo</th>
+        <th>Estado</th>
+        ${(esSocio || puedeModificar) ? "<th>Acciones</th>" : ""}
+      </tr>
     `;
+    tabla.appendChild(thead);
+
+    // Cuerpo
+    const tbody = document.createElement("tbody");
+
+    clases.forEach(c => {
+      const fila = document.createElement("tr");
+
+      fila.innerHTML = `
+        <td>${c.nombre_clase}</td>
+        <td>${c.tipo_actividad}</td>
+        <td>${c.dia_semana}</td>
+        <td>${(c.hora_inicio || '').slice(0, 5)}</td>
+        <td>${c.duracion_min} min</td>
+        <td>${c.lugar}</td>
+        <td>${c.profesor ?? 'Sin asignar'}</td>
+        <td>${c.cupo_maximo}</td>
+        <td>${c.estado}</td>
+      `;
+
+      // Columna de acciones
+      if (esSocio || puedeModificar) {
+        const tdAcciones = document.createElement("td");
+
+        if (esSocio) {
+          const btnAnotarse = document.createElement("button");
+          btnAnotarse.className = "btn btn-success btn-sm";
+          btnAnotarse.textContent = "Anotarse";
+          btnAnotarse.addEventListener("click", () => anotarseClase(c.id_clase));
+          tdAcciones.appendChild(btnAnotarse);
+        } else if (puedeModificar) {
+          const btnModificar = document.createElement("button");
+          btnModificar.className = "btn btn-warning btn-sm";
+          btnModificar.textContent = "Modificar";
+          btnModificar.addEventListener("click", () => modificarClase(c.id_clase));
+          tdAcciones.appendChild(btnModificar);
+        }
+
+        fila.appendChild(tdAcciones);
+      }
+
+      tbody.appendChild(fila);
+    });
+
+    tabla.appendChild(tbody);
 
     contenedor.innerHTML = "";
     contenedor.appendChild(tabla);
@@ -238,6 +269,8 @@ async function cargarClasesDisponibles() {
   }
 }
 
+
+// ==================== ACCIONES ====================
 async function anotarseClase(idClase) {
   try {
     const resp = await fetch("anotarse_clase.php", {
@@ -247,7 +280,7 @@ async function anotarseClase(idClase) {
     const resultado = await resp.json();
 
     if (resultado.exito) {
-      cargarClasesDisponibles();
+      if (document.getElementById("verTodasLasClases")) cargarClasesDisponibles();
     } else {
       alert(resultado.mensaje || "No se pudo inscribir.");
     }
@@ -257,6 +290,131 @@ async function anotarseClase(idClase) {
   }
 }
 
+async function cancelarInscripcion(idClase) {
+  try {
+    const resp = await fetch("cancelar_inscripcion.php", {
+      method: "POST",
+      body: new URLSearchParams({ id_clase: idClase })
+    });
+    const resultado = await resp.json();
+
+    if (resultado.exito) {
+      cargarClasesSegunPermisos();
+    } else {
+      alert(resultado.mensaje || "No se pudo cancelar la inscripción.");
+    }
+  } catch (error) {
+    console.error("Error al cancelar inscripción", error);
+    alert("Hubo un problema al cancelar la inscripción.");
+  }
+}
+
+
 function modificarClase(idClase) {
+  //a añadir
+  // Placeholder: abrí modal o redirigí a edición
   alert("Modificar clase (pendiente) ID: " + idClase);
 }
+
+function EliminarClase(idClase) {
+  //FALTA AÑADIR EL BOTON AL LADO DE MOFICIAR CLASE
+  alert("Modificar clase (pendiente) ID: " + idClase);
+}
+
+async function cargarMisClases() {
+  const contenedor = document.getElementById("verMisClases");
+  contenedor.innerHTML = "<p>Cargando mis clases...</p>";
+
+  try {
+    const resp = await fetch("obtener_mis_clases.php");
+    const data = await resp.json();
+
+    const clases = data.clases || [];
+
+    if (!clases.length) {
+      contenedor.innerHTML = "<p>No estás inscripto en ninguna clase.</p>";
+      return;
+    }
+
+    const tabla = document.createElement("table");
+    tabla.className = "table table-bordered table-hover";
+
+    // Cabecera
+    const thead = document.createElement("thead");
+    thead.className = "table-dark";
+    thead.innerHTML = `
+      <tr>
+        <th>Nombre</th>
+        <th>Actividad</th>
+        <th>Día</th>
+        <th>Hora</th>
+        <th>Duración</th>
+        <th>Lugar</th>
+        <th>Profesor</th>
+        <th>Cupo</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    `;
+    tabla.appendChild(thead);
+
+    // Cuerpo
+    const tbody = document.createElement("tbody");
+
+    clases.forEach(c => {
+      const fila = document.createElement("tr");
+
+      fila.innerHTML = `
+        <td>${c.nombre_clase}</td>
+        <td>${c.tipo_actividad}</td>
+        <td>${c.dia_semana}</td>
+        <td>${(c.hora_inicio || '').slice(0, 5)}</td>
+        <td>${c.duracion_min} min</td>
+        <td>${c.lugar}</td>
+        <td>${c.profesor ?? 'Sin asignar'}</td>
+        <td>${c.cupo_maximo}</td>
+        <td>${c.estado}</td>
+      `;
+
+      const tdAcciones = document.createElement("td");
+      const btnCancelar = document.createElement("button");
+      btnCancelar.className = "btn btn-danger btn-sm";
+      btnCancelar.textContent = "Cancelar";
+      btnCancelar.addEventListener("click", () => cancelarInscripcion(c.id_clase));
+
+      tdAcciones.appendChild(btnCancelar);
+      fila.appendChild(tdAcciones);
+      tbody.appendChild(fila);
+    });
+
+    tabla.appendChild(tbody);
+
+    contenedor.innerHTML = "";
+    contenedor.appendChild(tabla);
+  } catch (err) {
+    console.error("Error al cargar mis clases:", err);
+    contenedor.innerHTML = "<p>Error al cargar tus clases.</p>";
+  }
+}
+
+
+async function cancelarInscripcion(idClase) {
+  try {
+    const resp = await fetch("cancelar_inscripcion.php", {
+      method: "POST",
+      body: new URLSearchParams({ id_clase: idClase })
+    });
+    const resultado = await resp.json();
+
+    if (resultado.exito) {
+      cargarMisClases(); // recarga la tabla
+    } else {
+      alert(resultado.mensaje || "No se pudo cancelar la inscripción.");
+    }
+  } catch (error) {
+    console.error("Error al cancelar inscripción", error);
+    alert("Hubo un problema al cancelar la inscripción.");
+  }
+}
+
+

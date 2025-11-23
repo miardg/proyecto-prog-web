@@ -1,7 +1,15 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../auth.php';
+require_once __DIR__ . '/../../permisos.php';
 require_login();
+
+$idUsuario = $_SESSION['user']['id'] ?? null;
+
+if (!$idUsuario || !Permisos::tienePermiso("Ver clases", $idUsuario)) {
+    header("Location: ../dashboard.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,7 +28,7 @@ require_login();
     <?php include __DIR__ . '/../../includes/navbar_permisos.php'; ?>
     <div class="container mt-4">
         <h2 class="mb-4">Todas las clases activas</h2>
-        <div id="listaClases" class="table-responsive"></div>
+        <div id="verTodasLasClases" class="table-responsive"></div>
     </div>
 </body>
 

@@ -44,17 +44,13 @@ function can(string $permiso, ?int $idUsuario): bool
                         </a>
                         <ul class="dropdown-menu">
                             <?php if (can('Cancelar inscripción a clase', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/clases/clases_gestion.php">Ver mis
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/clases/ver_mis_clases.php">Ver mis
                                         clases</a></li>
                             <?php endif; ?>
 
                             <?php if (can('Crear clases', $idUsuario)): ?>
                                 <li><a class="dropdown-item" href="/proyecto-prog-web/views/clases/crear_clase.php">Crear
                                         clase</a></li>
-                            <?php endif; ?>
-
-                            <?php if (can('Modificar clases', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="clases_gestion.php">Modificar clase</a></li>
                             <?php endif; ?>
 
                             <?php if (can('Cancelar clase', $idUsuario)): ?>
