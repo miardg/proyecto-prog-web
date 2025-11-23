@@ -264,10 +264,16 @@ async function cargarClasesDisponibles() {
           tdAcciones.appendChild(btnAnotarse);
         } else if (puedeModificar) {
           const btnModificar = document.createElement("button");
-          btnModificar.className = "btn btn-warning btn-sm";
+          btnModificar.className = "btn btn-warning btn-sm me-2";
           btnModificar.textContent = "Modificar";
           btnModificar.addEventListener("click", () => modificarClase(c));
           tdAcciones.appendChild(btnModificar);
+
+          const btnCancelar = document.createElement("button");
+          btnCancelar.className = "btn btn-danger btn-sm";
+          btnCancelar.textContent = "Inactivar";
+          btnCancelar.addEventListener("click", () => cancelarClase(c.id_clase));
+          tdAcciones.appendChild(btnCancelar);
         }
 
         fila.appendChild(tdAcciones);
@@ -373,10 +379,27 @@ async function enviarClaseModificada(e) {
   }
 }
 
-function EliminarClase(idClase) {
-  //FALTA AÑADIR EL BOTON AL LADO DE MOFICIAR CLASE
-  alert("Modificar clase (pendiente) ID: " + idClase);
+async function cancelarClase(idClase) {
+  try {
+    const datos = new FormData();
+    datos.append("id_clase", idClase);
+
+    const resp = await fetch("procesar_cancelar_clase.php", {
+      method: "POST",
+      body: datos
+    });
+
+    const result = await resp.json();
+    if (result.success) {
+      cargarClasesDisponibles(); // refresca la tabla
+    } else {
+      console.error("Error al cancelar clase:", result.message);
+    }
+  } catch (e) {
+    console.error("Error al conectar con el servidor", e);
+  }
 }
+
 
 async function cargarMisClases() {
   const contenedor = document.getElementById("verMisClases");

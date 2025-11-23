@@ -9,8 +9,6 @@ header('Content-Type: application/json; charset=utf-8');
 $idUsuario = $_SESSION['user']['id'] ?? null;
 
 try {
-  error_log("ID de sesión: " . $idUsuario);
-
   if (!$idUsuario || !Permisos::tienePermiso("Ver clases", $idUsuario)) {
     echo json_encode(["clases" => [], "esSocio" => false, "puedeModificar" => false]);
     exit;
@@ -27,7 +25,6 @@ try {
 
   if ($esSocio) {
     $idSocio = (int) $socio['id_socio'];
-    error_log("Usuario $idUsuario es socio con ID $idSocio");
 
     $sql = "
     SELECT c.id_clase, c.nombre_clase, c.tipo_actividad, c.dia_semana, c.hora_inicio,
@@ -44,11 +41,10 @@ try {
     ORDER BY FIELD(c.dia_semana,
                    'Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'),
              c.hora_inicio
-";
+    ";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':socio', $idSocio, PDO::PARAM_INT);
   } else {
-    error_log("Usuario $idUsuario no es socio");
     $sql = "
     SELECT c.id_clase, c.nombre_clase, c.tipo_actividad, c.dia_semana, c.hora_inicio,
            c.duracion_min, c.lugar, c.cupo_maximo, c.estado,
@@ -57,18 +53,16 @@ try {
     FROM clase c
     LEFT JOIN usuario u
       ON u.id_usuario = c.profesor_id
-    WHERE c.estado = 'activa'
+    WHERE c.estado IN ('activa', 'cancelada')
     ORDER BY FIELD(c.dia_semana,
                    'Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'),
              c.hora_inicio
-";
+    ";
     $stmt = $conn->prepare($sql);
   }
 
-
   $stmt->execute();
   $clases = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  error_log("Clases encontradas: " . count($clases));
 
   echo json_encode([
     "clases" => $clases,
