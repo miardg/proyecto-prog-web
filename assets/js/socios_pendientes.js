@@ -16,7 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const fechaAlta = document.getElementById("aprobarFechaAlta").value;
     const fechaVencimiento = document.getElementById("aprobarFechaVencimiento").value;
 
-    if (!plan || !fechaAlta || !fechaVencimiento) {
+    // Nuevos campos de pago
+    const monto = document.getElementById("aprobarMonto").value;
+    const metodo = document.getElementById("aprobarMetodo").value;
+    const periodo = document.getElementById("aprobarPeriodo").value;
+
+    if (!plan || !fechaAlta || !fechaVencimiento || !monto || !metodo || !periodo) {
       alert("Todos los campos son obligatorios");
       return;
     }
@@ -24,12 +29,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const resp = await fetch("/proyecto-prog-web/views/socios/aprobar_socio.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idUsuario, plan, fechaAlta, fechaVencimiento })
+      body: JSON.stringify({ 
+        idUsuario, 
+        plan, 
+        fechaAlta, 
+        fechaVencimiento, 
+        monto, 
+        metodo, 
+        periodo 
+      })
     });
 
     const data = await resp.json();
     if (data.success) {
-      alert("Socio aprobado correctamente");
+      alert("Socio aprobado correctamente con primer pago registrado");
       location.reload();
     } else {
       alert("Error: " + data.error);

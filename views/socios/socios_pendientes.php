@@ -34,7 +34,7 @@ if (
         <br>
 
         <h2 class="fw-bold mb-4">Socios pendientes de aprobación</h2>
-        <p class="text-muted">Aprobá registros web y asignales plan</p>
+        <p class="text-muted">Aprobá registros web y asignales plan + primer pago</p>
 
         <!-- Buscador -->
         <div class="row g-2 mb-4">
@@ -78,6 +78,7 @@ if (
                     <div class="modal-body">
                         <input type="hidden" id="aprobarIdUsuario">
 
+                        <!-- Plan -->
                         <label class="form-label">Plan</label>
                         <select id="aprobarPlanSelect" class="form-select" required>
                             <option value="">Seleccione un plan</option>
@@ -88,12 +89,31 @@ if (
                         </select>
                         <div class="invalid-feedback">Debe seleccionar un plan válido.</div>
 
+                        <!-- Fechas -->
                         <label class="form-label mt-3">Fecha de alta</label>
                         <input type="date" id="aprobarFechaAlta" class="form-control"
                             value="<?php echo date('Y-m-d'); ?>" required>
 
                         <label class="form-label mt-3">Fecha de vencimiento</label>
                         <input type="date" id="aprobarFechaVencimiento" class="form-control" required>
+
+                        <!-- Primer pago -->
+                        <hr class="my-3">
+                        <h6 class="fw-bold">Primer pago</h6>
+
+                        <label class="form-label">Monto</label>
+                        <input type="number" id="aprobarMonto" class="form-control" required>
+
+                        <label class="form-label mt-3">Método de pago</label>
+                        <select id="aprobarMetodo" class="form-select" required>
+                            <option value="">Seleccione método</option>
+                            <option value="efectivo">Efectivo</option>
+                            <option value="tarjeta">Tarjeta</option>
+                            <option value="transferencia">Transferencia</option>
+                        </select>
+
+                        <label class="form-label mt-3">Periodo correspondiente</label>
+                        <input type="text" id="aprobarPeriodo" class="form-control" placeholder="Ej: Noviembre 2025" required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
