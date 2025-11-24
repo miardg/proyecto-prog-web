@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } catch (PDOException $e) {
             if ($e->getCode() == 23000) {
-                // Error de integridad (clave duplicada)
+                //error dni o mail duplicado
                 if (strpos($e->getMessage(), 'dni') !== false) {
                     $error = "Ya existe un usuario registrado con ese DNI.";
                 } elseif (strpos($e->getMessage(), 'email') !== false) {
