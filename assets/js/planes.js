@@ -74,7 +74,7 @@ async function cargarMiPlan() {
 
 async function cargarPlanesLanding() {
   try {
-    const resp = await fetch('views/planes/obtener_planes.php'); // ajustá la ruta si es necesario
+    const resp = await fetch('/proyecto-prog-web/views/planes/obtener_planes_publico.php');
     const planes = await resp.json();
     const contenedor = document.getElementById("planesLanding");
 
@@ -114,6 +114,7 @@ async function cargarPlanesLanding() {
       `<p class="text-danger text-center">Error al conectar con el servidor.</p>`;
   }
 }
+
 
 function modificarPlan(plan) {
   // Rellenar campos del modal
