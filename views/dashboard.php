@@ -32,11 +32,10 @@ $nombre = $_SESSION['user']['name'];
 
         <!-- quiza habria que quitar esto y dejar un simple "saludo" al usuario manejandonos unicamente por la nav bar -->
         <?php if (Permisos::esRol('Administrador', $idUsuario)): ?>
-            <?php include __DIR__ . '/partials/menu_admin.php'; ?>
+            <?php include __DIR__ . '/partials/menu_admin.html'; ?>
+            <script src="../assets/js/admin.js" defer></script>
         <?php elseif (Permisos::esRol('Profesor', $idUsuario)): ?>
             <?php include __DIR__ . '/partials/menu_profesor.php'; ?>
-        <?php elseif (Permisos::esRol('Recepcionista', $idUsuario)): ?>
-            <?php include __DIR__ . '/partials/menu_recepcionista.php'; ?>
         <?php elseif (Permisos::esRol('Socio', $idUsuario)): ?>
             <?php include __DIR__ . '/partials/menu_socio.html'; ?>
             <script src="../assets/js/socio.js" defer></script>

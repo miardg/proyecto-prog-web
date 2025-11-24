@@ -8,26 +8,32 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("planesLanding")) {
     cargarPlanesLanding();
   }
+  if (document.getElementById("formModificarPlan")) {
+    enviarPlanesModificados();
+  }
 });
 
 async function cargarPlanesDisponibles() {
   try {
     const resp = await fetch('obtener_planes.php');
-    const planes = await resp.json();
+    const data = await resp.json();
     const contenedor = document.getElementById("listaPlanes");
 
-    if (!planes || planes.length === 0) {
+    if (!data.planes || data.planes.length === 0) {
       contenedor.innerHTML = `<p class="text-muted">No hay planes disponibles.</p>`;
       return;
     }
 
-    contenedor.innerHTML = planes.map(plan => `
+    contenedor.innerHTML = data.planes.map(plan => `
       <div class="card mb-3 shadow-sm">
         <div class="card-body">
           <h5 class="card-title">${plan.nombre}</h5>
           <p>${plan.descripcion}</p>
           <p><strong>Precio:</strong> $${plan.precio}</p>
           <p><strong>Frecuencia:</strong> ${plan.frecuencia_servicios}</p>
+        ${data.puedeModificar
+        ? `<button class="btn btn-sm btn-warning fw-bold px-3" onclick='modificarPlan(${JSON.stringify(plan)})'>Modificar</button>`
+        : ""}
         </div>
       </div>
     `).join('');
@@ -68,7 +74,7 @@ async function cargarMiPlan() {
 
 async function cargarPlanesLanding() {
   try {
-    const resp = await fetch('views/planes/obtener_planes.php'); // ajustá la ruta si es necesario
+    const resp = await fetch('/proyecto-prog-web/views/planes/obtener_planes_publico.php');
     const planes = await resp.json();
     const contenedor = document.getElementById("planesLanding");
 
@@ -107,4 +113,55 @@ async function cargarPlanesLanding() {
     document.getElementById("planesLanding").innerHTML =
       `<p class="text-danger text-center">Error al conectar con el servidor.</p>`;
   }
+}
+
+
+function modificarPlan(plan) {
+  // Rellenar campos del modal
+  document.getElementById("mod-id-plan").value = plan.id_plan;
+  document.getElementById("mod-nombre").value = plan.nombre;
+  document.getElementById("mod-descripcion").value = plan.descripcion;
+  document.getElementById("mod-precio").value = plan.precio;
+  document.getElementById("mod-frecuencia").value = plan.frecuencia_servicios;
+
+  // Mostrar modal
+  const modal = new bootstrap.Modal(document.getElementById("modalModificarPlan"));
+  modal.show();
+}
+
+async function enviarPlanesModificados() {
+  const form = document.getElementById("formModificarPlan");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Validación HTML5
+    if (!form.checkValidity()) {
+      form.classList.add("was-validated");
+      return;
+    }
+
+    const datos = new FormData(form);
+
+    try {
+      const resp = await fetch('procesar_modificar_plan.php', {
+        method: 'POST',
+        body: datos
+      });
+      const result = await resp.json();
+
+      if (result.success) {
+        // refrescar lista de planes
+        cargarPlanesDisponibles();
+        // cerrar modal directamente
+        bootstrap.Modal.getInstance(document.getElementById("modalModificarPlan")).hide();
+      } else {
+        // mostrar error dentro del modal si falla
+        console.error("Error al modificar plan:", result.message);
+      }
+    } catch (err) {
+      console.error("Error al conectar con el servidor", err);
+    }
+  });
 }
