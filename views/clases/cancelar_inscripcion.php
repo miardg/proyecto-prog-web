@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../auth.php';
+require_once __DIR__ . '/../../permisos.php';
 require_login();
 
 header('Content-Type: application/json; charset=utf-8');
@@ -10,6 +11,11 @@ $idClase = $_POST['id_clase'] ?? null;
 
 if (!$idUsuario || !$idClase) {
     echo json_encode(["exito" => false, "mensaje" => "Datos incompletos"]);
+    exit;
+}
+
+if (!Permisos::tienePermiso("Cancelar inscripción a clase", $idUsuario)) {
+    echo json_encode(["exito" => false, "mensaje" => "No tenés permiso para cancelar inscripciones"]);
     exit;
 }
 
