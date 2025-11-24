@@ -35,7 +35,7 @@ function can(string $permiso, ?int $idUsuario): bool
                     can('Ver clases asignadas', $idUsuario) ||
                     can('Ver inscriptos', $idUsuario) ||
                     can('Confirmar asistencia', $idUsuario) ||
-                    can('Anotarse a clase', $idUsuario)
+                    can('Cancelar inscripción a clase', $idUsuario)
                 ): ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle <?= ($currentPage ?? '') === 'clases' ? 'active' : '' ?>"
@@ -43,17 +43,14 @@ function can(string $permiso, ?int $idUsuario): bool
                             Clases
                         </a>
                         <ul class="dropdown-menu">
-                            <?php if (can('Ver clases', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/clases/mis_clases.php">Mis
+                            <?php if (can('Cancelar inscripción a clase', $idUsuario)): ?>
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/clases/ver_mis_clases.php">Ver mis
                                         clases</a></li>
                             <?php endif; ?>
 
                             <?php if (can('Crear clases', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="clases_crear.php">Crear clase</a></li>
-                            <?php endif; ?>
-
-                            <?php if (can('Modificar clases', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="clases_gestion.php">Modificar clase</a></li>
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/clases/crear_clase.php">Crear
+                                        clase</a></li>
                             <?php endif; ?>
 
                             <?php if (can('Cancelar clase', $idUsuario)): ?>
@@ -72,9 +69,9 @@ function can(string $permiso, ?int $idUsuario): bool
                                 <li><a class="dropdown-item" href="clases_asistencia.php">Confirmar asistencia</a></li>
                             <?php endif; ?>
 
-                            <?php if (can('Anotarse a clase', $idUsuario)): ?>
+                            <?php if (can('Ver clases', $idUsuario)): ?>
                                 <li><a class="dropdown-item"
-                                        href="/proyecto-prog-web/views/clases/clases_disponibles.php">Anotarse a clase</a></li>
+                                        href="/proyecto-prog-web/views/clases/clases_disponibles.php">Ver clases disponibles</a></li>
                             <?php endif; ?>
 
                         </ul>
@@ -98,10 +95,6 @@ function can(string $permiso, ?int $idUsuario): bool
                                 <li><a class="dropdown-item" href="/proyecto-prog-web/views/planes/mi_plan_actual.php">Mi plan
                                         actual</a></li>
                             <?php endif; ?>
-
-                            <?php if (can('Modificar planes', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="planes_gestion.php">Gestionar/Modificar planes</a></li>
-                            <?php endif; ?>
                         </ul>
                     </li>
                 <?php endif; ?>
@@ -115,15 +108,11 @@ function can(string $permiso, ?int $idUsuario): bool
                         </a>
                         <ul class="dropdown-menu">
                             <?php if (can('Crear usuario', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="usuarios_crear.php">Crear usuario</a></li>
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/usuarios/crear_usuario.php">Crear usuario</a></li>
                             <?php endif; ?>
 
-                            <?php if (can('Modificar usuario', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="usuarios_gestion.php">Modificar usuario</a></li>
-                            <?php endif; ?>
-
-                            <?php if (can('Eliminar usuario', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="usuarios_eliminar.php">Eliminar usuario</a></li>
+                            <?php if (can('Ver usuarios', $idUsuario)): ?>
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/usuarios/ver_usuarios.php">Ver usuarios</a></li>
                             <?php endif; ?>
                         </ul>
                     </li>
