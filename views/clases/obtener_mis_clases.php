@@ -14,7 +14,7 @@ try {
         exit;
     }
 
-    if (!Permisos::tienePermiso("Ver mis clases", $idUsuario)) {
+    if (!Permisos::tienePermiso("Cancelar inscripción a clase", $idUsuario)) {
         echo json_encode(["clases" => [], "error" => "No tenés permiso para ver tus clases"]);
         exit;
     }

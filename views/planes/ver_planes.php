@@ -7,7 +7,7 @@ require_login();
 $idUsuario = $_SESSION['user']['id'];
 $nombre = $_SESSION['user']['name'];
 
-if (!Permisos::tienePermiso("Ver planes disponibles", $idUsuario)) {
+if (!Permisos::tienePermiso("Ver planes", $idUsuario)) {
     echo "<div class='alert alert-danger text-center mt-5'>No tenés permiso para ver los planes disponibles</div>";
     exit;
 }

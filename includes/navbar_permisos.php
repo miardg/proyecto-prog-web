@@ -59,7 +59,7 @@ function isProfesorCompleto(?int $idUsuario): bool
                     can('Ver clases asignadas', $idUsuario) ||
                     can('Ver inscriptos', $idUsuario) ||
                     can('Confirmar asistencia', $idUsuario) ||
-                    can('Anotarse a clase', $idUsuario)
+                    can('Anotarse a clase', $idUsuario) ||
                     can('Cancelar inscripción a clase', $idUsuario)
                 ): ?>
                     <li class="nav-item dropdown">
@@ -179,6 +179,7 @@ function isProfesorCompleto(?int $idUsuario): bool
 
 
                 <!-- Beneficios -->
+                <!-- Beneficios no se implemento ya que el equipo no se puso de acuerdo en que funcionalidad darle al haber tenido que quitar personal trainer y nutricionista
                 <?php if (can('Ver beneficios', $idUsuario) || can('Canjear beneficio', $idUsuario)): ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle <?= ($currentPage ?? '') === 'beneficios' ? 'active' : '' ?>"
@@ -196,6 +197,7 @@ function isProfesorCompleto(?int $idUsuario): bool
                         </ul>
                     </li>
                 <?php endif; ?>
+                -->
             </ul>
 
             <!-- Usuario y sesión -->
