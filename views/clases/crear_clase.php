@@ -111,7 +111,6 @@ if (!$idUsuario || !Permisos::tienePermiso("Crear clases", $idUsuario)) {
                                         <label for="hora_inicio" class="form-label">Hora de inicio</label>
                                         <select class="form-select" id="hora_inicio" name="hora_inicio" required>
                                             <option value="">Seleccione día, sala y duración</option>
-                                            <!-- Podés dejarlo vacío y rellenarlo con tu función actualizarHorariosDisponibles -->
                                         </select>
                                         <div class="invalid-feedback">Seleccione una hora válida.</div>
                                     </div>
@@ -120,7 +119,6 @@ if (!$idUsuario || !Permisos::tienePermiso("Crear clases", $idUsuario)) {
                                         <label for="profesor_id" class="form-label">Profesor</label>
                                         <select class="form-select" id="profesor_id" name="profesor_id" required>
                                             <option value="">Seleccione un profesor</option>
-                                            <!-- Podés dejarlo vacío y rellenarlo con JS si querés, o poner opciones fijas -->
                                         </select>
                                         <div class="invalid-feedback">Seleccione un profesor válido.</div>
                                     </div>

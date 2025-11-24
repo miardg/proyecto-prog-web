@@ -1,4 +1,3 @@
-// /assets/js/socios_pendientes.js
 document.addEventListener("DOMContentLoaded", () => {
   cargarSociosPendientes();
 
@@ -65,7 +64,6 @@ async function cargarSociosPendientes(busqueda = "") {
   usuarios.forEach(u => {
     const tr = document.createElement("tr");
 
-    // Celdas
     tr.innerHTML = `
       <td>${u.nombre} ${u.apellido}</td>
       <td class="d-none d-sm-table-cell">${u.email}</td>
@@ -75,7 +73,6 @@ async function cargarSociosPendientes(busqueda = "") {
       </td>
     `;
 
-    // Botón aprobar
     const btnAprobar = document.createElement("button");
     btnAprobar.className = "btn btn-success btn-sm";
     btnAprobar.textContent = "Aprobar";

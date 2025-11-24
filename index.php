@@ -19,7 +19,6 @@
     include __DIR__ . '/includes/navbar.php';
     ?>
 
-    <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="row align-items-center min-vh-100">
@@ -44,7 +43,6 @@
         </div>
     </section>
 
-    <!-- Features Section -->
     <section id="servicios" class="py-5 bg-light">
         <div class="container text-center">
             <h2 class="display-5 fw-bold mb-3">¿Por qué elegir KynetikGym?</h2>
@@ -79,7 +77,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <?php include __DIR__ . '/includes/footer.php'; ?>
 </body>
 

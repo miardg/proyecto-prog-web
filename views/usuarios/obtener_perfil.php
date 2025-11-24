@@ -5,11 +5,9 @@ require_login();
 
 header("Content-Type: application/json");
 
-// El id lo tenés en la sesión
 $idUsuario = $_SESSION['user']['id'];
 
 try {
-    // Usamos los nombres correctos de tabla y columnas
     $stmt = $conn->prepare("
         SELECT id_usuario, nombre, apellido, email, telefono, dni 
         FROM usuario 

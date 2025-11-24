@@ -33,7 +33,6 @@ try {
     $cupo = trim($_POST['cupo_maximo'] ?? '');
     $profesor = trim($_POST['profesor_id'] ?? '');
 
-    // Validaciones
     if ($nombre === '' || $tipo === '' || $dia === '' || $hora === '' || $duracion === '' || $lugar === '' || $cupo === '' || $profesor === '') {
         throw new Exception(json_encode(['field' => null, 'message' => 'Todos los campos son obligatorios']));
     }
@@ -59,7 +58,7 @@ try {
         throw new Exception(json_encode(['field' => 'cupo_maximo', 'message' => 'Cupo inválido (1 a 100)']));
     }
 
-    // Validar solapamiento en PHP
+    // validar solapamiento 
     $stmtCheck = $conn->prepare("
         SELECT hora_inicio, duracion_min 
         FROM clase 
@@ -87,7 +86,7 @@ try {
         }
     }
 
-    // Inserción
+    // insertamos
     $stmt = $conn->prepare("
         INSERT INTO clase 
             (nombre_clase, tipo_actividad, dia_semana, hora_inicio, duracion_min, lugar, profesor_id, cupo_maximo, estado)

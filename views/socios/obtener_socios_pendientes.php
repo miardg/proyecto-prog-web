@@ -6,7 +6,6 @@ require_login();
 
 $idUsuario = $_SESSION['user']['id'] ?? null;
 
-// Permisos: al menos uno
 if (
     !Permisos::tienePermiso('Aprobar nuevos socios', $idUsuario) &&
     !Permisos::tienePermiso('Asignar plan a un socio', $idUsuario)

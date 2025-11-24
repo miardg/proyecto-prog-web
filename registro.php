@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $confirm = $_POST['confirmPassword'] ?? '';
 
-    // Validaciones del lado del servidor
     if ($nombre === '' || $apellido === '' || $dni === '' || $email === '' || $telefono === '' || $password === '') {
         $error = "Todos los campos son obligatorios";
     } elseif (!preg_match("/^[a-zA-ZÀ-ÿ\s]{2,50}$/", $nombre)) {
@@ -75,13 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - Kynetik</title>
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="assets/css/styles.css" rel="stylesheet">
-
-    <!-- Scripts JS con defer -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="assets/js/main.js" defer></script>
 </head>
@@ -93,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-lg-8 col-xl-6">
                     <div class="auth-card">
                         <div class="row g-0">
-                            <!-- Lado izquierdo: imagen/icono y texto -->
                             <div
                                 class="col-md-6 d-flex align-items-center justify-content-center bg-dark text-white p-5">
                                 <div class="text-center">
@@ -103,7 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </div>
 
-                            <!-- Lado derecho: formulario -->
                             <div class="col-md-6 p-5">
                                 <div class="text-center mb-4">
                                     <h2 class="fw-bold">Crear Cuenta</h2>
@@ -119,7 +112,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?= htmlspecialchars($success) ?>
                                     </div>
                                 <?php endif; ?>
-                                <!-- FORM REGISTRO (se puede poner novalidate para probar el js) -->
                                 <!-- FORM REGISTRO -->
                                 <form id="registroForm" method="POST" action="registro.php">
                                     <div class="row">

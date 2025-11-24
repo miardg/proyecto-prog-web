@@ -8,7 +8,6 @@ $idUsuario = $_SESSION['user']['id'];
 
 try {
     $permisos = Permisos::getPermisos($idUsuario);
-    // Convertimos a array plano de strings
     $lista = array_map(fn($p) => $p['nombre'], $permisos);
     echo json_encode($lista);
 } catch (Throwable $e) {

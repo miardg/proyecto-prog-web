@@ -14,7 +14,7 @@ try {
     exit;
   }
 
-  // ¿Es socio?
+  // nos fijamos si es socio
   $stmt = $conn->prepare("SELECT id_socio FROM socio WHERE id_usuario = :id");
   $stmt->bindValue(':id', $idUsuario, PDO::PARAM_INT);
   $stmt->execute();

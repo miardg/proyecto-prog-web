@@ -117,14 +117,12 @@ async function cargarPlanesLanding() {
 
 
 function modificarPlan(plan) {
-  // Rellenar campos del modal
   document.getElementById("mod-id-plan").value = plan.id_plan;
   document.getElementById("mod-nombre").value = plan.nombre;
   document.getElementById("mod-descripcion").value = plan.descripcion;
   document.getElementById("mod-precio").value = plan.precio;
   document.getElementById("mod-frecuencia").value = plan.frecuencia_servicios;
 
-  // Mostrar modal
   const modal = new bootstrap.Modal(document.getElementById("modalModificarPlan"));
   modal.show();
 }
@@ -136,7 +134,6 @@ async function enviarPlanesModificados() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Validación HTML5
     if (!form.checkValidity()) {
       form.classList.add("was-validated");
       return;
@@ -152,12 +149,9 @@ async function enviarPlanesModificados() {
       const result = await resp.json();
 
       if (result.success) {
-        // refrescar lista de planes
         cargarPlanesDisponibles();
-        // cerrar modal directamente
         bootstrap.Modal.getInstance(document.getElementById("modalModificarPlan")).hide();
       } else {
-        // mostrar error dentro del modal si falla
         console.error("Error al modificar plan:", result.message);
       }
     } catch (err) {

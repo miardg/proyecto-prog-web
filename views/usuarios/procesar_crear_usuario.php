@@ -18,7 +18,6 @@ try {
         throw new Exception("No tiene permisos para crear usuarios");
     }
 
-    // Sanitización
     $nombre = trim($_POST['nombre'] ?? '');
     $apellido = trim($_POST['apellido'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -27,7 +26,6 @@ try {
     $password = trim($_POST['password'] ?? '');
     $rolNombre = trim($_POST['rol'] ?? '');
 
-    // Validaciones básicas
     if ($nombre === '' || !preg_match("/^[a-zA-ZÀ-ÿ\s]{2,50}$/", $nombre)) {
         throw new Exception("Nombre inválido");
     }
@@ -55,7 +53,6 @@ try {
         throw new Exception("Rol inexistente");
     }
 
-    // Hash de contraseña
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
     // Insertar usuario

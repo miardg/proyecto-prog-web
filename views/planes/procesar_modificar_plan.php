@@ -18,14 +18,12 @@ try {
         throw new Exception(json_encode(['field' => null, 'message' => 'No tiene permisos para modificar planes']));
     }
 
-    // Sanitización
     $idPlan = intval($_POST['id_plan'] ?? 0);
     $nombre = trim($_POST['nombre'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
     $precio = trim($_POST['precio'] ?? '');
     $frecuencia = trim($_POST['frecuencia_servicios'] ?? '');
 
-    // Validaciones
     if ($idPlan <= 0 || $nombre === '' || $descripcion === '' || $precio === '' || $frecuencia === '') {
         throw new Exception(json_encode(['field' => null, 'message' => 'Todos los campos son obligatorios']));
     }
@@ -46,7 +44,7 @@ try {
         throw new Exception(json_encode(['field' => 'frecuencia_servicios', 'message' => 'Frecuencia inválida (Mensual, Trimestral o Anual)']));
     }
 
-    // Actualización
+    // update
     $stmt = $conn->prepare("
         UPDATE plan
         SET nombre = :nombre,

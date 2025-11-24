@@ -70,13 +70,11 @@ async function cargarSociosActivos(busqueda = "") {
       </td>
     `;
 
-    // Botón Cambiar plan
     const btnCambiar = document.createElement("button");
     btnCambiar.className = "btn btn-sm btn-warning me-2";
     btnCambiar.textContent = "Cambiar plan";
     btnCambiar.addEventListener("click", () => abrirModalCambiarPlan(s.id_socio));
 
-    // Botón Dar de baja
     const btnBaja = document.createElement("button");
     btnBaja.className = "btn btn-sm btn-danger";
     btnBaja.textContent = "Dar de baja";

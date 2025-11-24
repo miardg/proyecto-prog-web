@@ -446,7 +446,6 @@ async function cargarMisClases() {
     const tabla = document.createElement("table");
     tabla.className = "table table-bordered table-hover";
 
-    // Cabecera
     const thead = document.createElement("thead");
     thead.className = "table-dark";
     thead.innerHTML = `
@@ -465,7 +464,6 @@ async function cargarMisClases() {
     `;
     tabla.appendChild(thead);
 
-    // Cuerpo
     const tbody = document.createElement("tbody");
 
     clases.forEach(c => {
@@ -516,7 +514,7 @@ async function cancelarInscripcion(idClase) {
 
     const feedback = document.getElementById("clasesFeedback");
     if (resultado.exito) {
-      cargarMisClases(); // recarga la tabla
+      cargarMisClases(); 
     } else if (feedback) {
       const alertBox = document.createElement("div");
       alertBox.className = "alert alert-danger text-center mt-3";

@@ -30,7 +30,6 @@ if (!Permisos::tienePermiso('Registrar pago de cuota', $idUsuario)) {
     <h2 class="fw-bold mb-4">Registro de pago de cuota</h2>
     <p class="text-muted">Buscar socio y registrar pago manual</p>
 
-    <!-- Buscador -->
     <div class="row g-2 mb-4">
         <div class="col-12 col-md-8">
             <input id="searchPagoInput" class="form-control" placeholder="Buscar por nombre o email...">
@@ -42,7 +41,6 @@ if (!Permisos::tienePermiso('Registrar pago de cuota', $idUsuario)) {
         </div>
     </div>
 
-    <!-- Tabla -->
     <div class="table-responsive" style="overflow-x:auto;">
         <table class="table table-hover align-middle" style="min-width:720px;">
             <thead class="table-dark">
@@ -56,7 +54,7 @@ if (!Permisos::tienePermiso('Registrar pago de cuota', $idUsuario)) {
                     <th class="text-end">Acciones</th>
                 </tr>
             </thead>
-            <tbody id="sociosPagoTbody"><!-- Render JS --></tbody>
+            <tbody id="sociosPagoTbody"></tbody>
         </table>
     </div>
 </div>

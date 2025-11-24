@@ -64,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?= htmlspecialchars($error) ?>
                                     </div>
                                 <?php endif; ?>
-                                <!-- FORMULARIO LOGIN (se puede poner novalidate para probar el js) -->
                                 <form id="loginForm" method="POST" action="login.php">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
@@ -118,7 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <!-- MODAL DE FEEDBACK que usa main.js -->
     <div class="modal fade" id="modalFeedback" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

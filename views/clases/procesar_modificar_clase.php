@@ -18,7 +18,6 @@ try {
         throw new Exception(json_encode(['field' => null, 'message' => 'No tiene permisos para modificar clases']));
     }
 
-    // Sanitización
     $idClase = intval($_POST['id_clase'] ?? 0);
     $nombre = trim($_POST['nombre_clase'] ?? '');
     $tipo = trim($_POST['tipo_actividad'] ?? '');
@@ -29,7 +28,6 @@ try {
     $cupo = trim($_POST['cupo_maximo'] ?? '');
     $profesor = trim($_POST['profesor_id'] ?? '');
 
-    // Validaciones
     if ($idClase <= 0 || $nombre === '' || $tipo === '' || $dia === '' || $hora === '' || $duracion === '' || $lugar === '' || $cupo === '' || $profesor === '') {
         throw new Exception(json_encode(['field' => null, 'message' => 'Todos los campos son obligatorios']));
     }
@@ -55,7 +53,7 @@ try {
         throw new Exception(json_encode(['field' => 'cupo_maximo', 'message' => 'Cupo inválido (1 a 100)']));
     }
 
-    // Validar solapamiento en PHP (excluyendo la clase que se está modificando)
+    // validar solapamiento en PHP (excluimos la clase que se modifica)
     $stmtCheck = $conn->prepare("
         SELECT hora_inicio, duracion_min 
         FROM clase 
@@ -85,7 +83,7 @@ try {
         }
     }
 
-    // Actualización
+    // update
     $stmt = $conn->prepare("
         UPDATE clase
         SET nombre_clase = :nombre,

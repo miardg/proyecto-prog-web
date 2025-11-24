@@ -1,13 +1,4 @@
 window.onload = function () {
-    // Usuarios de prueba para la navegacion del front
-    const usuariosPrueba = [
-        { email: "profesional@gmail.com", password: "123456", rol: "profesionales" },
-        { email: "profesor@gmail.com", password: "123456", rol: "profesor" },
-        { email: "socio@gmail.com", password: "123456", rol: "socio" },
-        { email: "administrador@gmail.com", password: "123456", rol: "administrador" },
-        { email: "administrativo@gmail.com", password: "123456", rol: "administrativo" }
-    ];
-
     // ---------------------- NAVBAR ----------------------
     let navbar = document.querySelector(".navbar");
     let navbarCollapse = document.querySelector(".navbar-collapse");
@@ -40,7 +31,6 @@ window.onload = function () {
     function mostrarModal(titulo, mensaje) {
         if (modalTitle) modalTitle.textContent = titulo;
         if (modalBody) modalBody.textContent = mensaje;
-        // Se espera que tengas un modal de Bootstrap configurado con id="modalFeedback"
         let modal = new bootstrap.Modal(document.getElementById("modalFeedback"));
         modal.show();
     }
@@ -55,7 +45,6 @@ window.onload = function () {
             let valido = true;
             let formatoMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            // Validar email
             if (!formatoMail.test(loginEmail.value)) {
                 loginEmail.classList.add("is-invalid");
                 valido = false;
@@ -64,7 +53,6 @@ window.onload = function () {
                 loginEmail.classList.add("is-valid");
             }
 
-            // Validar password
             if (loginPassword.value.trim() === "") {
                 loginPassword.classList.add("is-invalid");
                 valido = false;
@@ -73,12 +61,10 @@ window.onload = function () {
                 loginPassword.classList.add("is-valid");
             }
 
-            // Si no es valido, bloqueamos el envio y mostramos modal
             if (!valido) {
                 e.preventDefault();
                 mostrarModal("Error", "Revise los campos de inicio de sesión.");
             }
-            // Si es valido, NO hacemos preventDefault osea el form se envia al backend
         });
     }
 
@@ -100,7 +86,6 @@ window.onload = function () {
             let formatoMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             let formatoTelefono = /^[0-9\-]+$/;
 
-            // Validar nombre
             if (nombre.value.trim().length < 2) {
                 nombre.classList.add("is-invalid");
                 valido = false;
@@ -109,7 +94,6 @@ window.onload = function () {
                 nombre.classList.add("is-valid");
             }
 
-            // Validar apellido
             if (apellido.value.trim().length < 2) {
                 apellido.classList.add("is-invalid");
                 valido = false;
@@ -118,7 +102,6 @@ window.onload = function () {
                 apellido.classList.add("is-valid");
             }
 
-            // Validar DNI (7-8 dígitos numéricos)
             if (dni.value.length < 7 || dni.value.length > 8) {
                 dni.classList.add("is-invalid");
                 valido = false;
@@ -127,7 +110,6 @@ window.onload = function () {
                 dni.classList.add("is-valid");
             }
 
-            // Validar email
             if (!formatoMail.test(emailRegistro.value)) {
                 emailRegistro.classList.add("is-invalid");
                 valido = false;
@@ -136,7 +118,6 @@ window.onload = function () {
                 emailRegistro.classList.add("is-valid");
             }
 
-            // Validar teléfono
             if (!formatoTelefono.test(telefono.value)) {
                 telefono.classList.add("is-invalid");
                 valido = false;
@@ -145,7 +126,6 @@ window.onload = function () {
                 telefono.classList.add("is-valid");
             }
 
-            // Validar contraseñas
             if (pass1.value.length < 6 || pass1.value !== pass2.value) {
                 pass1.classList.add("is-invalid");
                 pass2.classList.add("is-invalid");
@@ -157,7 +137,6 @@ window.onload = function () {
                 pass2.classList.add("is-valid");
             }
 
-            // Validar checkbox términos
             if (!terminos.checked) {
                 terminos.classList.add("is-invalid");
                 valido = false;

@@ -4,7 +4,6 @@ require_once __DIR__ . '/config.php';
 $error = '';
 $success = '';
 
-// Bloquea acceso directo si no hay email en sesión (debe venir de verificar.php)
 if (!isset($_SESSION['reset_email'])) {
     header('Location: recuperar.php');
     exit;
@@ -14,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newPass = $_POST['newPassword'] ?? '';
     $confirm = $_POST['confirmPassword'] ?? '';
 
-    // Validaciones básicas
     if ($newPass === '' || $confirm === '') {
         $error = "Debes completar ambos campos.";
     } elseif ($newPass !== $confirm) {
@@ -30,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':email' => $_SESSION['reset_email']
             ]);
 
-            // Limpia variables de recuperación para que no se reutilicen
             unset($_SESSION['reset_code'], $_SESSION['reset_email']);
 
             $success = "Contraseña actualizada correctamente. Ya puedes iniciar sesión.";
@@ -47,11 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Resetear Contraseña - KynetikGym</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap + tu hoja de estilos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/styles.css" rel="stylesheet">
-    <!-- Iconos opcionales -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="assets/js/recuperar_contrasena.js" defer></script>
 </head>
 
@@ -102,9 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap JS opcional -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 
 </html>

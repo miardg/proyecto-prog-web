@@ -15,13 +15,11 @@
 
 <body>
 
-    <!-- Navigation -->
     <?php
     $currentPage = 'planes';
     include __DIR__ . '/includes/navbar.php';
     ?>
 
-    <!-- Header -->
     <section class="bg-dark text-white py-5">
         <div class="container">
             <div class="row">
@@ -33,7 +31,6 @@
         </div>
     </section>
 
-    <!-- Plans Section -->
     <section class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-5">Nuestros Planes</h2>
@@ -42,7 +39,6 @@
     </section>
 
 
-    <!-- FAQ Section -->
     <section class="py-5 bg-light">
         <div class="container">
             <div class="row">
@@ -101,7 +97,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <?php include __DIR__ . '/includes/footer.php'; ?>
 </body>
 

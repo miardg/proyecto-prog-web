@@ -201,7 +201,6 @@ html {
 
 .titulo-panel {
   color: var(--primary-yellow);
-  /* si ya definiste el color institucional */
   font-weight: 700;
   font-size: 2rem;
   text-align: center;

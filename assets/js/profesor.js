@@ -1,10 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Cargar profesores en el formulario de creación si existe
     if (document.getElementById('profesor_id')) {
         cargarProfesores('profesor_id');
     }
 
-    // Cargar profesores en el modal de modificación si existe
     if (document.getElementById('mod-profesor')) {
         cargarProfesores('mod-profesor');
     }
@@ -12,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function cargarProfesores(selectorId, actual = '') {
     const select = document.getElementById(selectorId);
-    if (!select) return; // si no existe el select, no hace nada
+    if (!select) return; 
 
     fetch('../profesor/obtener_profesores.php')
         .then(resp => resp.json())

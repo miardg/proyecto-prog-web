@@ -6,7 +6,6 @@ require_login();
 
 $idUsuario = $_SESSION['user']['id'] ?? null;
 
-// Validar permisos: al menos uno
 if (
     !Permisos::tienePermiso('Aprobar nuevos socios', $idUsuario) &&
     !Permisos::tienePermiso('Asignar plan a un socio', $idUsuario)
@@ -36,7 +35,6 @@ if (
         <h2 class="fw-bold mb-4">Socios pendientes de aprobación</h2>
         <p class="text-muted">Aprobá registros web y asignales plan + primer pago</p>
 
-        <!-- Buscador -->
         <div class="row g-2 mb-4">
             <div class="col-12 col-md-8">
                 <input id="searchPendienteInput" class="form-control" placeholder="Buscar por nombre o email...">
@@ -48,7 +46,6 @@ if (
             </div>
         </div>
 
-        <!-- Tabla -->
         <div class="table-responsive" style="overflow-x:auto;">
             <table class="table table-hover align-middle" style="min-width:640px;">
                 <thead class="table-dark">
@@ -60,7 +57,6 @@ if (
                     </tr>
                 </thead>
                 <tbody id="sociosPendientesTbody">
-                    <!-- Renderizado por JS -->
                 </tbody>
             </table>
         </div>
@@ -78,7 +74,6 @@ if (
                     <div class="modal-body">
                         <input type="hidden" id="aprobarIdUsuario">
 
-                        <!-- Plan -->
                         <label class="form-label">Plan</label>
                         <select id="aprobarPlanSelect" class="form-select" required>
                             <option value="">Seleccione un plan</option>
@@ -89,7 +84,6 @@ if (
                         </select>
                         <div class="invalid-feedback">Debe seleccionar un plan válido.</div>
 
-                        <!-- Fechas -->
                         <label class="form-label mt-3">Fecha de alta</label>
                         <input type="date" id="aprobarFechaAlta" class="form-control"
                             value="<?php echo date('Y-m-d'); ?>" required>
@@ -97,7 +91,6 @@ if (
                         <label class="form-label mt-3">Fecha de vencimiento</label>
                         <input type="date" id="aprobarFechaVencimiento" class="form-control" required>
 
-                        <!-- Primer pago -->
                         <hr class="my-3">
                         <h6 class="fw-bold">Primer pago</h6>
 

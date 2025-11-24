@@ -23,7 +23,6 @@ require_login();
         <br>
         <h2>Mi Perfil</h2>
 
-        <!-- Card con datos -->
         <div class="card p-4 mb-3">
             <h5 class="card-title">Datos personales</h5>
 
@@ -39,7 +38,6 @@ require_login();
 
             <p>
                 <strong>DNI:</strong> <span id="cardDni"></span>
-                <!-- DNI no editable -->
             </p>
 
             <p>
@@ -69,7 +67,6 @@ require_login();
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body" id="modalEditarBody">
-                        <!-- Aquí se inyecta dinámicamente el input -->
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Guardar</button>

@@ -86,7 +86,6 @@ async function cargarUsuarios() {
         <td>${u.estado}</td>
       `;
 
-            // Columna de acciones
             const tdAcciones = document.createElement("td");
 
             if (u.permiso_modificar) {
@@ -127,7 +126,7 @@ async function inactivarUsuario(idUsuario) {
         const result = await resp.json();
 
         if (result.success) {
-            cargarUsuarios(); // refresca tabla
+            cargarUsuarios(); 
         } else {
             alert(result.message);
         }
@@ -166,7 +165,7 @@ async function procesarModificarUsuario(e) {
         const feedback = document.getElementById("modificarUsuarioFeedback");
         if (result.success) {
             feedback.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
-            cargarUsuarios(); // refrescar tabla
+            cargarUsuarios(); 
             setTimeout(() => {
                 bootstrap.Modal.getInstance(document.getElementById("modalModificarUsuario")).hide();
             }, 1000);

@@ -6,12 +6,10 @@ require_login();
 
 $idUsuario = $_SESSION['user']['id'] ?? null;
 
-// Validar permisos: debe tener al menos uno de los dos
 if (
     !Permisos::tienePermiso('Cambiar plan de socio', $idUsuario) &&
     !Permisos::tienePermiso('Dar de baja socio', $idUsuario)
 ) {
-    // Redirigir al dashboard si no tiene permisos
     header("Location: /proyecto-prog-web/views/dashboard.php");
     exit;
 }
@@ -33,14 +31,12 @@ if (
 <body>
     <div class="container mt-5 px-3">
 
-        <!-- Navbar según permisos -->
         <?php include __DIR__ . '/../../includes/navbar_permisos.php'; ?>
         <br>
 
         <h2 class="fw-bold mb-4">Gestión de Socios Activos</h2>
         <p class="text-muted">Buscar, cambiar plan o dar de baja socios activos</p>
 
-        <!-- Buscador -->
         <div class="row g-2 mb-4">
             <div class="col-12 col-md-8">
                 <input id="searchSocioInput" class="form-control" placeholder="Buscar por nombre o email...">
@@ -52,7 +48,6 @@ if (
             </div>
         </div>
 
-        <!-- Tabla de socios -->
         <div class="table-responsive" style="overflow-x:auto;">
             <table class="table table-hover align-middle" style="min-width:640px;">
                 <thead class="table-dark">
@@ -66,7 +61,6 @@ if (
                     </tr>
                 </thead>
                 <tbody id="sociosActivosTbody">
-                    <!-- Renderizado por JS -->
                 </tbody>
             </table>
         </div>
