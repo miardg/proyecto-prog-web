@@ -108,15 +108,11 @@ function can(string $permiso, ?int $idUsuario): bool
                         </a>
                         <ul class="dropdown-menu">
                             <?php if (can('Crear usuario', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="usuarios_crear.php">Crear usuario</a></li>
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/usuarios/crear_usuario.php">Crear usuario</a></li>
                             <?php endif; ?>
 
-                            <?php if (can('Modificar usuario', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="usuarios_gestion.php">Modificar usuario</a></li>
-                            <?php endif; ?>
-
-                            <?php if (can('Eliminar usuario', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="usuarios_eliminar.php">Eliminar usuario</a></li>
+                            <?php if (can('Ver usuarios', $idUsuario)): ?>
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/usuarios/ver_usuarios.php">Ver usuarios</a></li>
                             <?php endif; ?>
                         </ul>
                     </li>
