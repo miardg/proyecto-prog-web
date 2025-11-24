@@ -65,7 +65,7 @@ function solapa(rIni, rFin, oIni, oFin) {
   return rIni < oFin && rFin > oIni;
 }
 
-// ==================== CREAR CLASE ====================
+// ==================== EVITAR SOLAPAMIENTO DE CLASES TANTO PARA CREAR COMO PARA MODIFICAR ====================
 async function actualizarHorariosDisponibles(formId = "crearClaseForm", botonId = "btnCrearClase") {
   const form = document.getElementById(formId);
   if (!form) return;
@@ -141,6 +141,8 @@ async function actualizarHorariosDisponibles(formId = "crearClaseForm", botonId 
   }
 }
 
+// ==================== CREAR CLASE ====================
+
 function crearClase() {
   const form = document.getElementById("crearClaseForm");
   if (!form) return;
@@ -148,8 +150,14 @@ function crearClase() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    if (!form.checkValidity()) {
+      form.classList.add("was-validated");
+      return;
+    }
+
     form.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
-    form.querySelectorAll(".alert").forEach(el => el.remove());
+    const feedback = document.getElementById("claseFeedback");
+    feedback.innerHTML = "";
 
     const formData = new FormData(form);
 
@@ -164,24 +172,26 @@ function crearClase() {
         const alertBox = document.createElement("div");
         alertBox.className = "alert alert-success text-center mt-3";
         alertBox.textContent = data.message;
-        form.prepend(alertBox);
+        feedback.appendChild(alertBox);
         form.reset();
+        form.classList.remove("was-validated");
+        form.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
         actualizarHorariosDisponibles();
       } else {
         if (data.field) {
           const input = form.querySelector(`[name="${data.field}"]`);
           if (input) {
             input.classList.add("is-invalid");
-            const feedback = input.nextElementSibling;
-            if (feedback && feedback.classList.contains("invalid-feedback")) {
-              feedback.textContent = data.message;
+            const invalidFeedback = input.nextElementSibling;
+            if (invalidFeedback && invalidFeedback.classList.contains("invalid-feedback")) {
+              invalidFeedback.textContent = data.message;
             }
           }
         } else {
           const alertBox = document.createElement("div");
           alertBox.className = "alert alert-danger text-center mt-3";
           alertBox.textContent = data.message;
-          form.prepend(alertBox);
+          feedback.appendChild(alertBox);
         }
       }
     } catch (err) {
@@ -189,7 +199,7 @@ function crearClase() {
       const alertBox = document.createElement("div");
       alertBox.className = "alert alert-danger text-center mt-3";
       alertBox.textContent = "Error de conexión con el servidor.";
-      form.prepend(alertBox);
+      feedback.appendChild(alertBox);
     }
   });
 }
@@ -215,7 +225,6 @@ async function cargarClasesDisponibles() {
     const tabla = document.createElement("table");
     tabla.className = "table table-bordered table-hover";
 
-    // Cabecera
     const thead = document.createElement("thead");
     thead.className = "table-dark";
     thead.innerHTML = `
@@ -234,7 +243,6 @@ async function cargarClasesDisponibles() {
     `;
     tabla.appendChild(thead);
 
-    // Cuerpo
     const tbody = document.createElement("tbody");
 
     clases.forEach(c => {
@@ -252,7 +260,7 @@ async function cargarClasesDisponibles() {
         <td>${c.estado}</td>
       `;
 
-      // Columna de acciones
+      // Columna de acciones (SI NO TENES PERMISOS PARA MODIFICAR O CANCELAR, MOSTRAMOS SOLAMENTE LA TABLA)
       if (esSocio || puedeModificar) {
         const tdAcciones = document.createElement("td");
 
@@ -313,25 +321,7 @@ async function anotarseClase(idClase) {
   }
 }
 
-async function cancelarInscripcion(idClase) {
-  try {
-    const resp = await fetch("cancelar_inscripcion.php", {
-      method: "POST",
-      body: new URLSearchParams({ id_clase: idClase })
-    });
-    const resultado = await resp.json();
-
-    if (resultado.exito) {
-      cargarClasesSegunPermisos();
-    } else {
-      alert(resultado.mensaje || "No se pudo cancelar la inscripción.");
-    }
-  } catch (error) {
-    console.error("Error al cancelar inscripción", error);
-    alert("Hubo un problema al cancelar la inscripción.");
-  }
-}
-
+// ==================== MODIFICAR CLASE ====================
 
 function modificarClase(c) {
   document.getElementById("mod-id-clase").value = c.id_clase;
@@ -342,22 +332,31 @@ function modificarClase(c) {
   document.getElementById("mod-lugar").value = c.lugar;
   document.getElementById("mod-cupo").value = c.cupo_maximo;
 
-  // Usamos la función de profesor.js
   cargarProfesores("mod-profesor", c.profesor_id);
 
-  // Refrescar horarios disponibles en el modal
   actualizarHorariosDisponibles("formModificarClase", "btnModificarClase");
 
   const modal = new bootstrap.Modal(document.getElementById("modalModificarClase"));
   modal.show();
 }
 
-
-
 async function enviarClaseModificada(e) {
   e.preventDefault();
 
   const form = e.target;
+  const feedback = form.querySelector("#claseFeedbackMod") || document.createElement("div");
+  feedback.id = "claseFeedbackMod";
+  feedback.className = "mt-2";
+  if (!form.contains(feedback)) {
+    form.appendChild(feedback);
+  }
+  feedback.innerHTML = "";
+
+  if (!form.checkValidity()) {
+    form.classList.add("was-validated");
+    return;
+  }
+
   const formData = new FormData(form);
 
   try {
@@ -368,14 +367,41 @@ async function enviarClaseModificada(e) {
     const data = await resp.json();
 
     if (data.success) {
-      bootstrap.Modal.getInstance(form.closest(".modal")).hide();
-      cargarClasesDisponibles(); // recarga la tabla
+      const alertBox = document.createElement("div");
+      alertBox.className = "alert alert-success text-center mt-3";
+      alertBox.textContent = data.message || "Clase modificada correctamente";
+      feedback.appendChild(alertBox);
+
+      setTimeout(() => {
+        bootstrap.Modal.getInstance(form.closest(".modal")).hide();
+        cargarClasesDisponibles();
+      }, 1000);
+
+      form.classList.remove("was-validated");
+      form.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
     } else {
-      alert(data.message || "No se pudo modificar la clase.");
+      if (data.field) {
+        const input = form.querySelector(`[name="${data.field}"]`);
+        if (input) {
+          input.classList.add("is-invalid");
+          const invalidFeedback = input.nextElementSibling;
+          if (invalidFeedback && invalidFeedback.classList.contains("invalid-feedback")) {
+            invalidFeedback.textContent = data.message;
+          }
+        }
+      } else {
+        const alertBox = document.createElement("div");
+        alertBox.className = "alert alert-danger text-center mt-3";
+        alertBox.textContent = data.message || "No se pudo modificar la clase.";
+        feedback.appendChild(alertBox);
+      }
     }
   } catch (err) {
     console.error("Error al modificar clase", err);
-    alert("Error de conexión con el servidor.");
+    const alertBox = document.createElement("div");
+    alertBox.className = "alert alert-danger text-center mt-3";
+    alertBox.textContent = "Error de conexión con el servidor.";
+    feedback.appendChild(alertBox);
   }
 }
 
@@ -391,7 +417,7 @@ async function cancelarClase(idClase) {
 
     const result = await resp.json();
     if (result.success) {
-      cargarClasesDisponibles(); // refresca la tabla
+      cargarClasesDisponibles();
     } else {
       console.error("Error al cancelar clase:", result.message);
     }
@@ -400,6 +426,7 @@ async function cancelarClase(idClase) {
   }
 }
 
+// ==================== VER CLASES ANOTADAS ====================
 
 async function cargarMisClases() {
   const contenedor = document.getElementById("verMisClases");
@@ -477,6 +504,7 @@ async function cargarMisClases() {
   }
 }
 
+// ==================== CANCELAR INSCRIPCION ====================
 
 async function cancelarInscripcion(idClase) {
   try {
@@ -486,15 +514,28 @@ async function cancelarInscripcion(idClase) {
     });
     const resultado = await resp.json();
 
+    const feedback = document.getElementById("clasesFeedback");
     if (resultado.exito) {
       cargarMisClases(); // recarga la tabla
-    } else {
-      alert(resultado.mensaje || "No se pudo cancelar la inscripción.");
+    } else if (feedback) {
+      const alertBox = document.createElement("div");
+      alertBox.className = "alert alert-danger text-center mt-3";
+      alertBox.textContent = resultado.mensaje || "No se pudo cancelar la inscripción.";
+      feedback.innerHTML = "";
+      feedback.appendChild(alertBox);
     }
   } catch (error) {
     console.error("Error al cancelar inscripción", error);
-    alert("Hubo un problema al cancelar la inscripción.");
+    const feedback = document.getElementById("clasesFeedback");
+    if (feedback) {
+      const alertBox = document.createElement("div");
+      alertBox.className = "alert alert-danger text-center mt-3";
+      alertBox.textContent = "Hubo un problema al cancelar la inscripción.";
+      feedback.innerHTML = "";
+      feedback.appendChild(alertBox);
+    }
   }
 }
+
 
 
