@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     enviarUsuario();
-    cargarUsuarios();
+    
+    if (document.getElementById("usuariosTableBody")) {
+        cargarUsuarios();
+    }
 
     const formModificar = document.getElementById("formModificarUsuario");
     if (formModificar) {
@@ -54,6 +57,9 @@ function enviarUsuario() {
 async function cargarUsuarios() {
     const tbody = document.getElementById("usuariosTableBody");
     const feedback = document.getElementById("usuariosFeedback");
+
+    // si no estamos en la vista de usuarios, no hacer nada
+    if (!tbody || !feedback) return;
 
     try {
         const resp = await fetch("obtener_usuarios.php");
