@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 Recordarme
                                             </label>
                                         </div>
-                                        <a href="#" class="text-warning">¿Olvidaste tu contraseña?</a>
+                                        <a href="recuperar.php" class="text-warning">¿Olvidaste tu contraseña?</a>
                                     </div>
 
                                     <button type="submit" class="btn btn-warning w-100 mb-3">

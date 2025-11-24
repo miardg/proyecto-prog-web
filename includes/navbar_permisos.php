@@ -123,7 +123,8 @@ function can(string $permiso, ?int $idUsuario): bool
                     can('Asignar plan a socio', $idUsuario) ||
                     can('Cambiar plan de socio', $idUsuario) ||
                     can('Dar de baja socio', $idUsuario) ||
-                    can('Aprobar nuevos socios', $idUsuario)
+                    can('Aprobar nuevos socios', $idUsuario) ||
+                    can('Registrar pago de cuota', $idUsuario)
                 ): ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle <?= ($currentPage ?? '') === 'socios' ? 'active' : '' ?>"
@@ -131,24 +132,25 @@ function can(string $permiso, ?int $idUsuario): bool
                             Socios
                         </a>
                         <ul class="dropdown-menu">
-                            <?php if (can('Asignar plan a socio', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="socios_asignar_plan.php">Asignar plan</a></li>
+                            <?php if (can('Asignar plan a socio', $idUsuario) || can('Aprobar nuevos socios', $idUsuario)): ?>
+                                <li><a class="dropdown-item"
+                                        href="/proyecto-prog-web/views/socios/socios_pendientes.php">Aprobar nuevos socios</a>
+                                </li>
                             <?php endif; ?>
 
-                            <?php if (can('Cambiar plan de socio', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="socios_cambiar_plan.php">Cambiar plan</a></li>
+                            <?php if (can('Registrar pago de cuota', $idUsuario)): ?>
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/pagos/view_registro_pago.php">Registrar
+                                        pago de cuota</a></li>
                             <?php endif; ?>
 
-                            <?php if (can('Aprobar nuevos socios', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="socios_aprobar.php">Aprobar nuevos socios</a></li>
-                            <?php endif; ?>
-
-                            <?php if (can('Dar de baja socio', $idUsuario)): ?>
-                                <li><a class="dropdown-item" href="socios_baja.php">Dar de baja socio</a></li>
+                            <?php if (can('Dar de baja socio', $idUsuario) || can('Cambiar plan de socio', $idUsuario)): ?>
+                                <li><a class="dropdown-item" href="/proyecto-prog-web/views/socios/socios_activos.php">Gestionar
+                                        socios activos</a></li>
                             <?php endif; ?>
                         </ul>
                     </li>
                 <?php endif; ?>
+
 
                 <!-- Beneficios -->
                 <?php if (can('Ver beneficios', $idUsuario) || can('Canjear beneficio', $idUsuario)): ?>
