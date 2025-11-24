@@ -62,7 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $success = "Registro enviado. Un recepcionista confirmará su alta.";
             }
         } catch (PDOException $e) {
-            $error = "Error al registrar: " . $e->getMessage();
+            if ($e->getCode() == 23000) {
+                // Error de integridad (clave duplicada)
+                if (strpos($e->getMessage(), 'dni') !== false) {
+                    $error = "Ya existe un usuario registrado con ese DNI.";
+                } elseif (strpos($e->getMessage(), 'email') !== false) {
+                    $error = "Ya existe una cuenta con ese correo.";
+                } else {
+                    $error = "El dato ingresado ya está registrado.";
+                }
+            } else {
+                $error = "Error al registrar: " . $e->getMessage();
+            }
         }
     }
 }
