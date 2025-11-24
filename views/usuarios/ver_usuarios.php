@@ -29,11 +29,10 @@ if (!$idUsuario || !Permisos::tienePermiso("Ver usuarios", $idUsuario)) {
     <div>
         <?php include __DIR__ . '/../../includes/navbar_permisos.php'; ?>
     </div>
-    <div class="py-5 bg-light">
+    <div class="py-5 bg-light mt-5">
         <div class="container">
-            <h2 class="mb-4 mt-4">Usuarios registrados</h2>
             <div id="usuariosFeedback"></div>
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered align-middle table-responsive">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>

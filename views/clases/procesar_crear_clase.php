@@ -9,10 +9,12 @@ $response = ['success' => false, 'message' => '', 'field' => null];
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception(json_encode(['field' => null, 'message' => 'Método no permitido']));
+        $response['success'] = false;
+        $response['message'] = 'Método no permitido';
+        echo json_encode($response);
+        exit;
     }
 
-    // Sanitización
     $nombre = trim($_POST['nombre_clase'] ?? '');
     $tipo = trim($_POST['tipo_actividad'] ?? '');
     $dia = trim($_POST['dia_semana'] ?? '');
