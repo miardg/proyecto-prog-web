@@ -11,11 +11,12 @@ $nombre = $_SESSION['user']['name'];
 
 <head>
     <meta charset="UTF-8">
-    <title>dashboard</title>
+    <title>KynetikGym</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
 </head>
 
 <body>
@@ -40,9 +41,11 @@ $nombre = $_SESSION['user']['name'];
             <?php include __DIR__ . '/partials/menu_socio.html'; ?>
             <script src="../assets/js/socio.js" defer></script>
         <?php else: ?>
-            <p>no hay contenido definido para este rol</p>
+            <p>No hay contenido definido para este rol</p>
         <?php endif; ?>
     </div>
+
+    <?php include __DIR__ . '../../includes/footer.php'; ?> 
 
 </body>
 
