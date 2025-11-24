@@ -8,6 +8,22 @@ function can(string $permiso, ?int $idUsuario): bool
 {
     return $idUsuario && Permisos::tienePermiso($permiso, $idUsuario);
 }
+
+function isProfesorCompleto(?int $idUsuario): bool
+{
+    $permisosNecesarios = [
+        'Cancelar clase',
+        'Ver clases asignadas',
+        'Ver inscriptos',
+        'Confirmar asistencia'
+    ];
+    foreach ($permisosNecesarios as $permiso) {
+        if (!can($permiso, $idUsuario)) {
+            return false;
+        }
+    }
+    return true;
+}
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -27,7 +43,15 @@ function can(string $permiso, ?int $idUsuario): bool
                 </li>
 
                 <!-- Clases -->
-                <?php if (
+                <?php if (isProfesorCompleto($idUsuario)): ?>
+                    <!-- Profesor con todos los permisos: acceso directo al calendario -->
+                    <li class="nav-item">
+                        <a class="nav-link <?= ($currentPage ?? '') === 'calendario' ? 'active' : '' ?>"
+                            href="/proyecto-prog-web/views/clases/calendario_profesor.php">
+                            Mis Clases
+                        </a>
+                    </li>
+                <?php elseif (
                     can('Crear clases', $idUsuario) ||
                     can('Modificar clases', $idUsuario) ||
                     can('Ver clases', $idUsuario) ||
@@ -35,6 +59,7 @@ function can(string $permiso, ?int $idUsuario): bool
                     can('Ver clases asignadas', $idUsuario) ||
                     can('Ver inscriptos', $idUsuario) ||
                     can('Confirmar asistencia', $idUsuario) ||
+                    can('Anotarse a clase', $idUsuario)
                     can('Cancelar inscripción a clase', $idUsuario)
                 ): ?>
                     <li class="nav-item dropdown">
@@ -77,6 +102,7 @@ function can(string $permiso, ?int $idUsuario): bool
                         </ul>
                     </li>
                 <?php endif; ?>
+
 
                 <!-- Planes -->
                 <?php if (can('Ver planes', $idUsuario) || can('Modificar planes', $idUsuario) || can('Ver plan actual', $idUsuario)): ?>
