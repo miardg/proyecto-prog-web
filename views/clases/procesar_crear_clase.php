@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../auth.php';
+require_once __DIR__ . '/../../permisos.php';
 require_login();
 
 header('Content-Type: application/json; charset=utf-8');
@@ -11,6 +12,14 @@ try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         $response['success'] = false;
         $response['message'] = 'Método no permitido';
+        echo json_encode($response);
+        exit;
+    }
+
+    $idUsuario = $_SESSION['user']['id'] ?? null;
+    if (!$idUsuario || !Permisos::tienePermiso("Crear clases", $idUsuario)) {
+        $response['success'] = false;
+        $response['message'] = 'No tiene permisos para crear clases';
         echo json_encode($response);
         exit;
     }

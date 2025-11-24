@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../auth.php';
+require_once __DIR__ . '/../../permisos.php';
 require_login();
 
 header('Content-Type: application/json; charset=utf-8');
@@ -10,6 +11,11 @@ $idUsuario = $_SESSION['user']['id'] ?? null;
 try {
     if (!$idUsuario) {
         echo json_encode(["clases" => [], "error" => "No hay usuario en sesión"]);
+        exit;
+    }
+
+    if (!Permisos::tienePermiso("Ver mis clases", $idUsuario)) {
+        echo json_encode(["clases" => [], "error" => "No tenés permiso para ver tus clases"]);
         exit;
     }
 
@@ -24,7 +30,7 @@ try {
         exit;
     }
 
-    $idSocio = (int)$socio['id_socio'];
+    $idSocio = (int) $socio['id_socio'];
 
     // Traer clases en las que está inscripto
     $sql = "
